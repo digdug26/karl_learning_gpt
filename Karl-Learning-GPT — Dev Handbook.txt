@@ -1,0 +1,201 @@
+Karl-Learning-GPT — Dev Handbook
+
+
+Current Folder / File Tree
+
+karl_learning_gpt/
+├─ .env
+├─ app.py                     ← FastAPI back-end entry
+├─ prompts.py                 ← System prompt template (JSON-only spec)
+├─ learner_profile.py         ← Pydantic models: LearnerProfile, LearnerSnapshot
+├─ utils/
+│  ├─ readaloud.py            ← Whisper transcription + fluency scorer
+│  ├─ mood.py                 ← (stub) returns 0.0 for now
+│  └─ comic.py                ← (stub) placeholder for reward comics
+├─ passages.json              ← ≈ 5 public-domain 40-60-word passages (legacy)
+├─ store_profile.py           ← Script that embeddings → Pinecone
+├─ requirements.txt           ← freeze once happy
+│
+├─ frontend/
+│  ├─ vite.config.js          ← Vite + proxy “/api → :8000” rewrite
+│  ├─ index.html
+│  ├─ src/
+│  │  ├─ App.jsx
+│  │  ├─ AudioRecorder.jsx
+│  │  ├─ WebcamSnap.jsx
+│  │  └─ ActivityBox.jsx
+│  └─ package.json
+└─ venv/  (ignored)
+
+
+
+
+Completed Milestones
+| Area                     | What’s done                                                                                                                                                         |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Environment**          | Python 3.13 venv, Node ≥ 18, React+Vite dev server, FastAPI+Uvicorn.                                                                                                |
+| **Secrets**              | `.env` with `OPENAI_API_KEY`, Pinecone keys, Whisper uses same key.                                                                                                 |
+| **Vector store**         | Pinecone index **karl-profile** (1 k dim, text-embedding-3-small). `store_profile.py` uploads Karl’s snapshot.                                                      |
+| **Assistant**            | `client.beta.assistants.create()` with GPT-4o-mini, Code Interpreter tool, JSON-only instructions.                                                                  |
+| **Session flow**         | `/start_session` → thread; `/submit_audio`, `/submit_mood`, `/next_activity` routes wired; React proxy `/api/*`.                                                    |
+| **Fluency scoring**      | `readaloud.score(audio, passage_text)` → transcription, WPM, accuracy.                                                                                              |
+| **Front-end UI**         | Buttons: **Start Adventure**, **Start/Stop reading**, **Mood check**, **Next Task**; Activity card renders `title`, `story_prompt`, `steps`, **read\_aloud** block. |
+| **Audio/Webcam capture** | Native `MediaRecorder` (WebM) and `react-webcam`; uploads succeed (200 OK).                                                                                         |
+| **Back-end upgrade**     | Migrated to latest **openai-python v1.x** (`client = OpenAI()`); Whisper transcription with `client.audio.transcriptions.create`.                                   |
+| **JSON unwrapping**      | FastAPI strips \`\`\` fences so React receives clean JSON.                                                                                                          |
+
+
+ Outstanding Tasks / To-Dos
+| Priority      | Task                                                                                                                                                                                                                       |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🔴 High       | **A.** Tighten Assistant prompt so every reply **always** includes `"read_aloud"` (40-60 words).<br>**B.** Pass that string from React to `/submit_audio` (already coded) and verify accuracy > 0.                         |
+| 🟠 Medium     | 1️⃣ Replace `mood.py` stub with real sentiment/facial-expression model (e.g. `mediapipe face_mesh` or OpenAI Vision).<br>2️⃣ Decide real reward logic (`reward_token=true` → trigger `utils.comic.generate_reward_comic`). |
+| 🟡 Low        | • Persist every `LearnerSnapshot` back into Pinecone (or Postgres).<br>• Weekly e-mail digests (FastAPI + background task / cron).</br>• Front-end polish (Tailwind styling, progress bar, disable buttons while loading). |
+| 🧑‍🔬 Stretch | • Auto-embed YouTube link for “multiplication song” (Assistant adds `"media_url"` field).<br>• Use GPT-4o image generation for one-panel reward comics.                                                                    |
+
+
+Tech Stack Recap
+| Layer             | Choice                                                                                          | Notes                                              |
+| ----------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| **Back-end**      | **FastAPI** + **Uvicorn**                                                                       | Async, easy form/multipart handling.               |
+| **AI**            | **openai-python ≥ 1.13** (`client = OpenAI()`)                                                  | GPT-4o-mini, Whisper-1.                            |
+| **Vector DB**     | **Pinecone Serverless (aws us-east-1)**                                                         | Stores learner profile + future snapshots.         |
+| **Front-end**     | **React 18 + Vite 6**                                                                           | Hot reload, proxy to FastAPI, Tailwind (optional). |
+| **Audio**         | Native `MediaRecorder` (WebM)                                                                   | No extra NPM dependency needed.                    |
+| **Webcam**        | `react-webcam`                                                                                  | Simple base64 screenshot.                          |
+| **State**         | Pydantic (`LearnerProfile`, `LearnerSnapshot`)                                                  | Held in memory for now.                            |
+| **Future extras** | • Email (SendGrid API) • Comic generation (`OpenAI.images.generate`) • Kafka / Redis if scaling |                                                    |
+
+
+ Next Concrete Steps
+    Assistant prompt update: add "read_aloud" to schema; redeploy.
+
+    React UI: show read_aloud; send it as passage with audio.
+
+    Verify accuracy > 0 round-trip.
+
+    Swap in real mood model (or simply random float for now to test pipeline).
+
+    Begin logging snapshots to Pinecone (one upsert per /submit_*).
+
+Once those are in, Karl will get a live adaptive reading + math adventure that records WPM, mood, and progresses automatically.
+
+
+
+
+
+
+
+
+0 . Quick-start (happy-path)
+# clone → create venv → install
+git clone <repo> && cd karl_learning_gpt
+python -m venv venv && venv\Scripts\activate        # Windows
+pip install -r requirements.txt
+cp .env.example .env                                 # fill in keys
+
+# back-end (port 8000)
+uvicorn app:app --reload --port 8000
+
+# front-end (port 5173)
+cd frontend
+npm install
+npm run dev
+
+
+Open http://localhost:5173/
+→ click “🚀 Start Karl’s Adventure”
+→ activity card with read-aloud block should render.
+
+1 . Folder map (2025-05-27)
+karl_learning_gpt/
+│   .env.example           ← template for secrets
+│   app.py                 ← FastAPI entry
+│   prompts.py             ← system prompt (JSON-only)
+│   learner_profile.py     ← Pydantic models
+│
+├─ utils/
+│   readaloud.py           ← Whisper + fluency
+│   mood.py                ← stub (returns 0.0)
+│   comic.py               ← stub comic generator
+│
+├─ passages.json           ← legacy fixed snippets
+├─ store_profile.py        ← Pinecone helper
+│
+└─ frontend/ (React+Vite)  ← src/App.jsx, AudioRecorder, WebcamSnap, ActivityBox
+
+
+2 . Environment variables
+
+| Key                             | Example    | Notes                                   |
+| ------------------------------- | ---------- | --------------------------------------- |
+| `OPENAI_API_KEY`                | sk-…       | used by `OpenAI()` for GPT-4o & Whisper |
+| `PINECONE_API_KEY`              | pcsk-…     | vector store                            |
+| `PINECONE_ENVIRONMENT`          | `us-east1` | matches console                         |
+| *(optional)* `SENDGRID_API_KEY` | SG-…       | weekly email digest                     |
+
+
+3 . Run / build
+
+| Mode        | Command                                                          |
+| ----------- | ---------------------------------------------------------------- |
+| Dev – API   | `uvicorn app:app --reload --port 8000`                           |
+| Dev – React | `npm run dev` (proxy `/api → 8000`)                              |
+| Prod bake   | `npm run build` → `dist/` served by nginx or FastAPI StaticFiles |
+
+
+4 . FastAPI endpoints (contract)
+| Path             | Method         | Body                                   | Returns                          |
+| ---------------- | -------------- | -------------------------------------- | -------------------------------- |
+| `/start_session` | POST           | –                                      | `{thread_id}`                    |
+| `/submit_audio`  | POST form-data | `thread_id`, `passage`, `audio` (webm) | WPM, accuracy (%), transcription |
+| `/submit_mood`   | POST form-data | `thread_id`, `image` (png)             | `{mood_score}` (float)           |
+| `/next_activity` | GET            | `thread_id` (query)                    | raw JSON string from Assistant   |
+
+
+Assistant JSON schema (v0.2):
+{
+  "title": "…",
+  "story_prompt": "…",
+  "steps": ["…", "…"],
+  "read_aloud": "40-60 words …",
+  "reward_token": false
+}
+
+
+5 . Known gotchas
+| Symptom                       | Root cause / Fix                                                              |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| `AttributeError: openai.beta` | ensure **openai ≥ 1.13** and use `client = OpenAI()`                          |
+| `NameError: passage_text`     | must be *inside* `score()`; no globals                                        |
+| Accuracy always 0             | passage you diff against ≠ text Karl read → send `"passage"` field from React |
+| Activity JSON not parsing     | strip \`\`\` fences (done in app.py) OR tighten Assistant prompt              |
+| React button never resets     | call `setRecorder(null)` in `rec.onstop`                                      |
+
+6 . Road-map / backlog
+| Priority | Item                                                                | Owner  |
+| -------- | ------------------------------------------------------------------- | ------ |
+| 🔴       | Replace `mood.py` with real CV model (`mediapipe` or OpenAI Vision) | *open* |
+| 🔴       | Persist every `LearnerSnapshot` → Pinecone/DB                       | *open* |
+| 🟠       | Weekly email digest (SendGrid)                                      | *open* |
+| 🟠       | Reward comic generator (GPT-4o images) when `"reward_token": true`  | *open* |
+| 🟡       | Front-end polish: progress bar, disable buttons while loading       | *open* |
+| 🟡       | Unit tests: pytest for utils + FastAPI TestClient                   | *open* |
+
+
+7 . Suggested next commit
+commit the Option B refactor:
+
+    read_aloud displayed, sent, scored
+
+    clean JSON return in /next_activity
+
+bump requirements.txt:
+openai>=1.13
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+pinecone-client
+
+tag v0.2-alpha.
