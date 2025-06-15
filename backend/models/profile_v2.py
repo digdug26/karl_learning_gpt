@@ -44,7 +44,7 @@ class History(BaseModel):
 
 
 class LearnerProfile(BaseModel):
-    learner_id: str = Field(..., regex=r"^[a-z0-9_]+$")
+    learner_id: str = Field(..., pattern=r"^[a-z0-9_]+$")
     demographics: Demographics
     preferences: Preferences
     attention: Attention

@@ -1,0 +1,15 @@
+{
+  "learner_id": "test_learner",
+  "demographics": {"age": 9, "grade": 4, "school_type": "public"},
+  "preferences": {
+    "modalities": ["video", "reading"],
+    "themes": ["space"],
+    "team_style": "solo",
+    "reward_mode": "badges"
+  },
+  "attention": {"focus_minutes": 15, "session_max_minutes": 30, "reset_strategy": "short_break"},
+  "reading": {"current_level": "4th", "avg_wpm": 100, "vocab_mastered": 20, "comprehension_score": 80},
+  "math": {"problem_solving_score": 80, "fact_memorization_opt_out": false},
+  "typing": {"keys_mastered_pct": 50, "current_wpm": 25},
+  "history": {"sessions_completed": 0, "badges": []}
+}
