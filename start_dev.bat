@@ -14,7 +14,7 @@ IF EXIST ".venv\Scripts\activate.bat" (
 
 REM ——— BACKEND (FastAPI) ———
 start "Karl-Backend" cmd /k ^
-  "cd /d %~dp0backend && uvicorn main:app --reload --port 8000"
+  "cd /d %~dp0 && uvicorn backend.main:app --reload --port 8000"
 
 REM ——— FRONTEND (React dev server) ———
 start "Karl-Frontend" cmd /k ^
