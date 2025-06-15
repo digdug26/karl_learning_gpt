@@ -1,5 +1,6 @@
 from jinja2 import Template
-import sendgrid, os, pinecone
+import os
+import sendgrid
 
 def compile_stats():
     # pull last-week snapshots from Pinecone

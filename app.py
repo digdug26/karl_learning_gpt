@@ -14,14 +14,12 @@ import uuid
 from datetime import datetime, timezone
 from tempfile import NamedTemporaryFile
 from typing import List, Optional, Dict, Any
-from io import BytesIO
-from PIL import Image
+
 
 # Third-party imports
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from openai import OpenAI
 from pinecone import Pinecone
@@ -268,7 +266,7 @@ Return ONLY the story text, no title or extra formatting."""
             "text": story_text,
             "target_wpm": current_wpm + 5  # Slight challenge increase
         }
-    except Exception as e:
+    except Exception:
         # Fallback story
         return {
             "id": "fallback_story",
@@ -348,6 +346,7 @@ def score_reading(uploaded_file, passage_text: str) -> dict:
             transcription = resp.text.strip()
             
             process_duration = (datetime.now(timezone.utc) - process_start).total_seconds()
+            print(f"🕒 Processing took {process_duration:.2f}s")
         
         print(f"🎤 Transcription: '{transcription}'")
         print(f"🎯 Target text: '{target}'")
@@ -2851,7 +2850,7 @@ Provide just the encouraging spark, no extra text."""
         spark = response.choices[0].message.content.strip()
         return {"spark": spark}
         
-    except Exception as e:
+    except Exception:
         return {"spark": "Great thinking! Keep exploring how AI could help solve this challenge in creative ways!"}
 
 @app.post("/api/improve-pitch")
@@ -2883,7 +2882,7 @@ Format as HTML with bullet points. Example:
         suggestions = response.choices[0].message.content.strip()
         return {"suggestions": suggestions}
         
-    except Exception as e:
+    except Exception:
         return {"suggestions": "<ul><li>Your pitch is off to a great start!</li><li>Try adding more details about how your AI will help people.</li><li>Make sure to explain why your solution is special!</li></ul>"}
 
 @app.post("/api/ai-render-sketch")
@@ -2891,8 +2890,6 @@ async def ai_render_sketch(request: Request):
     """Convert sketch to polished diagram using GPT-4o."""
     try:
         data = await request.json()
-        sketch_data = data.get('sketch_data', '')
-        text_labels = data.get('text_labels', [])
         concept = data.get('concept', '')
         
         # For now, return a placeholder since we can't actually process images in this demo
@@ -2904,7 +2901,7 @@ async def ai_render_sketch(request: Request):
             "description": f"AI-rendered diagram for {concept}"
         }
         
-    except Exception as e:
+    except Exception:
         return {"error": "AI rendering temporarily unavailable"}
 
 @app.post("/api/score-pitch")
@@ -2944,7 +2941,9 @@ async def get_shark_questions(request: Request):
         challenge = data.get('challenge', '')
         pitch = data.get('pitch', '')
         
-        prompt = f"""You are 3 AI investors (Shark Bots) evaluating a kid's AI solution for "{challenge}". 
+        prompt = f"""You are 3 AI investors (Shark Bots) evaluating a kid's AI solution for "{challenge}".
+Their pitch is: "{pitch}"
+
 
 Generate 3 follow-up questions that are:
 - Age-appropriate for a 9-10 year old
@@ -2978,7 +2977,7 @@ Return as JSON:
                 ]
             }
         
-    except Exception as e:
+    except Exception:
         return {
             "questions": [
                 {"investor": "Tech Shark", "question": "How would your AI learn and get better over time?"},
@@ -3017,10 +3016,10 @@ async def generate_badge(request: Request):
             "svg": badge.svg_data
         }
         
-    except Exception as e:
+    except Exception:
         return {
             "name": f"{challenge} Champion",
-            "description": f"Completed a Mini Hackathon!",
+            "description": "Completed a Mini Hackathon!",
             "svg": f'''<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="100" cy="100" r="95" fill="#4CAF50" stroke="#333" stroke-width="3"/>
                 <text x="100" y="90" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold">{challenge}</text>
@@ -3101,7 +3100,6 @@ async def complete_hackathon(request: Request):
     try:
         data = await request.json()
         session_id = data.get('session_id')
-        reflection = data.get('reflection', {})
         
         if session_id in hackathon_sessions:
             session = hackathon_sessions[session_id]

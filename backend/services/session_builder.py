@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 from ..models.profile_v2 import LearnerProfile
 from typing import Dict
-import random
 
 
 def build_session(profile: LearnerProfile) -> Dict:
