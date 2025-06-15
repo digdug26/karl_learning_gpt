@@ -12,7 +12,7 @@ from utils import readaloud, mood
 
 # Load environment variables
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
 
@@ -28,7 +28,7 @@ filled_prompts = raw_prompts.replace(
     json.dumps(profile.model_dump())
 )
 
-assistant_id = openai.beta.assistants.create(
+assistant_id = client.beta.assistants.create(
     name="Karl-Learning-GPT",
     model="gpt-4o-mini",
     tools=[{"type": "code_interpreter"}],
@@ -38,7 +38,7 @@ assistant_id = openai.beta.assistants.create(
 
 @app.post("/start_session")
 async def start_session():
-    thread = openai.beta.threads.create(assistant=assistant_id)
+    thread = client.beta.threads.create(assistant_id=assistant_id)
     return {"thread_id": thread.id}
 
 @app.post("/submit_audio")
@@ -61,7 +61,7 @@ async def submit_audio(
     )
 
     # Send result into the GPT thread
-    openai.beta.threads.messages.create(
+    client.beta.threads.messages.create(
         thread_id=thread_id,
         role="user",
         content=f"Here is Karl's read-aloud result: {wpm} WPM, {errors} mistakes."
@@ -91,13 +91,13 @@ async def submit_mood(
 @app.get("/next_activity")
 async def next_activity(thread_id: str):
     # Drive the Assistant forward
-    openai.beta.threads.runs.create_and_poll(
+    client.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
-        assistant=assistant_id
+        assistant_id=assistant_id
     )
 
     # Grab the latest message
-    messages = openai.beta.threads.messages.list(thread_id=thread_id).data
+    messages = client.beta.threads.messages.list(thread_id=thread_id).data
     reply = messages[-1].content
 
     return {"activity": reply}
