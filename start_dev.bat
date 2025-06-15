@@ -22,4 +22,5 @@ start "Karl-Frontend" cmd /k ^
 
 REM ——— Auto-open browser after 3 s ———
 timeout /t 3 >nul
-start "" http://localhost:3000
+REM  Vite uses port 5173 for the dev server
+start "" http://localhost:5173
