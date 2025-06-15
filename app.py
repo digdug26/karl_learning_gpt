@@ -3437,10 +3437,14 @@ if __name__ == "__main__":
             print(f"⚠️ Pinecone storage failed: {e}")
     
     # Run the server
+    # Launch the FastAPI app. The previous module path referenced
+    # ``karl_learning_consolidated`` which no longer exists in this repo.
+    # Using ``app:app`` ensures Uvicorn can locate the application object
+    # defined in this file.
     uvicorn.run(
-        "karl_learning_consolidated:app",
+        "app:app",
         host="0.0.0.0",
         port=8000,
         reload=False,
-        log_level="info"
+        log_level="info",
     )
