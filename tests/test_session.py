@@ -1,5 +1,7 @@
 from fastapi.testclient import TestClient
-import json, pathlib, sys
+import json
+import pathlib
+import sys
 
 sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
 from backend.main import app

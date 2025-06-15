@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import openai
 
 from learner_profile import LearnerProfile, LearnerSnapshot
-from utils import readaloud, mood, comic
+from utils import readaloud, mood
 
 # Load environment variables
 load_dotenv()
@@ -89,7 +89,7 @@ async def submit_mood(
 @app.get("/next_activity")
 async def next_activity(thread_id: str):
     # Drive the Assistant forward
-    run = openai.beta.threads.runs.create_and_poll(
+    openai.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
         assistant=assistant_id
     )
