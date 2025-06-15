@@ -1,0 +1,37 @@
+{
+  "learner_id": "karl_01",
+  "demographics": {
+    "age": 9,
+    "grade": 3,
+    "school_type": "Montessori"
+  },
+  "preferences": {
+    "modalities": ["audio", "short_video", "comic_drawing"],
+    "themes": ["space", "penguins_vs_polar_bears", "history", "slapstick_comedy"],
+    "team_style": "duo",
+    "reward_mode": "digital_badges"
+  },
+  "attention": {
+    "focus_minutes": 20,
+    "session_max_minutes": 60,
+    "reset_strategy": "open_comic_pad"
+  },
+  "reading": {
+    "current_level": "3rd_grade_SRA",
+    "avg_wpm": null,
+    "vocab_mastered": 0,
+    "comprehension_score": 0
+  },
+  "math": {
+    "problem_solving_score": 0,
+    "fact_memorization_opt_out": true
+  },
+  "typing": {
+    "keys_mastered_pct": 0,
+    "current_wpm": 0
+  },
+  "history": {
+    "sessions_completed": 0,
+    "badges": []
+  }
+}
