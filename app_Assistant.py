@@ -38,7 +38,10 @@ assistant_id = client.beta.assistants.create(
 
 @app.post("/start_session")
 async def start_session():
-    thread = client.beta.threads.create(assistant_id=assistant_id)
+    # The ``threads.create`` method only creates a new thread and doesn't
+    # accept an ``assistant_id`` parameter. The assistant is associated when
+    # running the thread, so we simply call the method without arguments.
+    thread = client.beta.threads.create()
     return {"thread_id": thread.id}
 
 @app.post("/submit_audio")
