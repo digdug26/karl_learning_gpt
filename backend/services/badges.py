@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from models.profile_v2 import LearnerProfile
+from ..models.profile_v2 import LearnerProfile
 
 
 def evaluate_badges(profile: LearnerProfile, session_metrics: Dict) -> List[str]:

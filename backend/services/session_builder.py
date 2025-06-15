@@ -1,5 +1,5 @@
 from datetime import datetime
-from models.profile_v2 import LearnerProfile
+from ..models.profile_v2 import LearnerProfile
 from typing import Dict
 import random
 

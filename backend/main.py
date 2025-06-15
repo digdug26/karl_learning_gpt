@@ -3,9 +3,9 @@ from pydantic import BaseModel
 
 from typing import Dict
 
-from models.profile_v2 import LearnerProfile
-from services.session_builder import build_session
-from services.badges import evaluate_badges
+from .models.profile_v2 import LearnerProfile
+from .services.session_builder import build_session
+from .services.badges import evaluate_badges
 
 app = FastAPI()
 
