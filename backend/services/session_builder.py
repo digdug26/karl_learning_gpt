@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from ..models.profile_v2 import LearnerProfile
 from typing import Dict
 import random
@@ -33,7 +33,7 @@ def build_session(profile: LearnerProfile) -> Dict:
     comic_prompt = "Draw the next scene where the penguin..."
 
     return {
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "intro": intro,
         "reading_text": reading_text,
         "reading_questions": reading_questions,
