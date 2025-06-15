@@ -20,7 +20,9 @@ app = FastAPI()
 profile = LearnerProfile()
 
 # Load the prompt template and inject only the {profile} token
-raw_prompts = open("prompts.py", "r", encoding="utf-8").read()
+from pathlib import Path
+PROMPT_PATH = Path(__file__).with_name("prompts.py")
+raw_prompts = PROMPT_PATH.read_text(encoding="utf-8")
 filled_prompts = raw_prompts.replace(
     "{profile}",
     json.dumps(profile.model_dump())
