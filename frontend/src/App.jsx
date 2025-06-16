@@ -71,6 +71,7 @@ export default function App() {
 
   return (
     <main className="p-6">
+
       {!threadId ? (
         <button onClick={newSession} disabled={loading}>
           🚀 Start Karl’s Adventure
