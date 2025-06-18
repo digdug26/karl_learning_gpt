@@ -15,8 +15,8 @@
     "extendable-media-recorder": "^9.2.26",
     "class-variance-authority": "^0.7.0",
     "tailwind-merge": "^2.2.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-webcam": "^7.2.0",
     "lucide-react": "^0.322.1",
     "@react-spring/web": "^9.7.2"
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@tailwindcss/postcss": "^4.1.10",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.4.1",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.25.0",
