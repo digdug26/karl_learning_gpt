@@ -4,16 +4,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        penguin: "#00A7E1",
-        polar: "#F0F9FF",
         comicInk: "#1B1B1B",
+        sky: { 500: "#38BDF8", 600: "#0EA5E9" },
+        amber: { 400: "#FBBF24", 500: "#F59E0B" },
+        grass: { 400: "#34D399", 500: "#10B981" },
       },
       fontFamily: {
         display: ["'Fredoka', sans-serif"],
       },
-      borderRadius: {
-        "2xl": "1.25rem",
-      },
+      borderRadius: { xl: "1rem", "2xl": "1.5rem" },
     },
   },
   plugins: [],
