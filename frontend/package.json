@@ -18,7 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-webcam": "^7.2.0",
-    "lucide-react": "^0.322.1",
+    "lucide-react": "^0.322.0",
     "@react-spring/web": "^9.7.2"
   },
   "devDependencies": {
