@@ -1,14 +1,16 @@
 import { Button } from "../components/ui/button";
-import { motion } from "framer-motion";
+import { useSpring, animated } from "@react-spring/web";
 
 export default function Home({ onStart }) {
+  const springProps = useSpring({
+    from: { transform: "scale(0)" },
+    to: { transform: "scale(1)" },
+    config: { tension: 400, friction: 20 },
+  });
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-sky-100 via-blue-100 to-grass-100">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 400, damping: 20 }}
-      >
+      <animated.div style={springProps}>
         <Button
           variant="menu"
           size="xl"
@@ -17,7 +19,7 @@ export default function Home({ onStart }) {
         >
           Start Karl’s Adventure!
         </Button>
-      </motion.div>
+      </animated.div>
     </div>
   );
 }
