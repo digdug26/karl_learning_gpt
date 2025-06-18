@@ -1,0 +1,97 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        // Enhanced vibrant palette for boys
+        comicInk: "#1B1B1B",
+        
+        // Primary blues - energetic and trustworthy
+        ocean: { 
+          400: "#60A5FA", 
+          500: "#3B82F6", 
+          600: "#2563EB",
+          700: "#1D4ED8"
+        },
+        
+        // Adventure greens - nature and growth
+        adventure: { 
+          400: "#4ADE80", 
+          500: "#22C55E", 
+          600: "#16A34A",
+          700: "#15803D"
+        },
+        
+        // Energy oranges - excitement and creativity
+        energy: { 
+          400: "#FB923C", 
+          500: "#F97316", 
+          600: "#EA580C",
+          700: "#C2410C"
+        },
+        
+        // Hero purples - magic and learning
+        hero: { 
+          400: "#A78BFA", 
+          500: "#8B5CF6", 
+          600: "#7C3AED",
+          700: "#6D28D9"
+        },
+        
+        // Success yellows - achievement and joy
+        sunshine: { 
+          400: "#FBBF24", 
+          500: "#F59E0B", 
+          600: "#D97706",
+          700: "#B45309"
+        },
+        
+        // Keep existing colors for compatibility
+        sky: { 400: "#60A5FA", 500: "#38BDF8", 600: "#0EA5E9" },
+        amber: { 400: "#FBBF24", 500: "#F59E0B" },
+        grass: { 400: "#34D399", 500: "#10B981" },
+        
+        // Soft backgrounds
+        cloudWhite: "#FEFEFE",
+        lightMist: "#F8FAFC",
+        softGray: "#F1F5F9"
+      },
+      
+      fontFamily: {
+        display: ["'Fredoka', sans-serif"],
+        body: ["'Inter', 'system-ui', sans-serif"],
+      },
+      
+      borderRadius: { 
+        xl: "1rem", 
+        "2xl": "1.5rem",
+        "3xl": "2rem",
+        "4xl": "2.5rem"
+      },
+      
+      boxShadow: {
+        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'medium': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'large': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        'glow-blue': '0 0 20px rgba(59, 130, 246, 0.3)',
+        'glow-green': '0 0 20px rgba(34, 197, 94, 0.3)',
+        'glow-orange': '0 0 20px rgba(249, 115, 22, 0.3)',
+      },
+      
+      animation: {
+        'bounce-gentle': 'bounce 2s infinite',
+        'pulse-slow': 'pulse 3s infinite',
+        'wiggle': 'wiggle 1s ease-in-out infinite',
+      },
+      
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
+      }
+    },
+  },
+  plugins: [],
+};
