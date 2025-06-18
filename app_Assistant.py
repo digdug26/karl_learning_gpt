@@ -101,6 +101,14 @@ async def next_activity(thread_id: str):
 
     # Grab the latest message
     messages = client.beta.threads.messages.list(thread_id=thread_id).data
-    reply = messages[-1].content
+    if not messages:
+        return {"activity": "No activity generated yet."}
+
+    latest = messages[0]
+    content_parts = latest.content or []
+    if content_parts and hasattr(content_parts[0], "text"):
+        reply = content_parts[0].text.value
+    else:
+        reply = str(content_parts)
 
     return {"activity": reply}
