@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Home from "./pages/Home";
-import Menu from "./pages/Menu";
-import StoryMode from "./pages/StoryMode";
+import Home from "./pages/Home.jsx";
+import Menu from "./pages/Menu.jsx";
+import StoryMode from "./pages/StoryMode.jsx";
 
 export default function App() {
   const [stage, setStage] = useState("home");
