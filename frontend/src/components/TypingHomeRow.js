@@ -1,7 +1,7 @@
 // Enhanced TypingHomeRow.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Keyboard, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { Keyboard, CheckCircle, XCircle, RotateCcw, Clock, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import sample from '../utils/sampleHomeRowText';
 
@@ -246,9 +246,6 @@ export function TypingHomeRow({ onFinish }) {
 }
 
 // Enhanced SessionTimer.jsx
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Clock, AlertCircle } from 'lucide-react';
 
 export function SessionTimer({ maxMinutes, children, onHardCap }) {
   const [elapsed, setElapsed] = useState(0);
