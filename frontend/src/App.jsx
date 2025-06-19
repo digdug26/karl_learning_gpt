@@ -8,7 +8,7 @@ export default function App() {
 
   if (stage === "home") return <Home onStart={() => setStage("menu")} />;
   if (stage === "menu") return <Menu onSelect={(mode) => setStage(mode)} />;
-  if (stage === "story") return <StoryMode />;
+  if (stage === "story") return <StoryMode onBack={() => setStage("menu")} />;
 
   return null;
 }
