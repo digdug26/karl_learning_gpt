@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Button } from '../components/ui/button';
 import TypingHomeRow from '../components/TypingHomeRow';
-import { Keyboard, ListTodo, Goal, ArrowLeft } from 'lucide-react';
+import StoryForge from './StoryForge';
+import { Keyboard, PenTool, Goal, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function TypingChallenge({ onBack }) {
@@ -15,10 +16,10 @@ export default function TypingChallenge({ onBack }) {
       icon: Keyboard,
     },
     {
-      id: 'words',
-      title: 'Word Sprint',
-      subtitle: 'Coming soon',
-      icon: ListTodo,
+      id: 'forge',
+      title: 'Story Forge',
+      subtitle: 'Create a short story',
+      icon: PenTool,
     },
     {
       id: 'sentences',
@@ -39,6 +40,12 @@ export default function TypingChallenge({ onBack }) {
         </div>
         <TypingHomeRow />
       </div>
+    );
+  }
+
+  if (activity === 'forge') {
+    return (
+      <StoryForge onBack={() => setActivity(null)} />
     );
   }
 
@@ -71,8 +78,11 @@ export default function TypingChallenge({ onBack }) {
             <Button
               variant="energy"
               size="lg"
-              onClick={() => item.id === 'basics' && setActivity('basics')}
-              disabled={item.id !== 'basics'}
+              onClick={() => {
+                if (item.id === 'basics') setActivity('basics');
+                if (item.id === 'forge') setActivity('forge');
+              }}
+              disabled={item.id !== 'basics' && item.id !== 'forge'}
               className="w-72 h-20 justify-start text-left border-3"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-energy-400 to-energy-600 opacity-90" />
