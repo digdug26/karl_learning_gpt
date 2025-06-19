@@ -13,7 +13,7 @@ export default function DailyJournal({ onBack }) {
   const submitEntry = async () => {
     if (!entry.trim()) return;
     try {
-      const { data } = await axios.post('/journal-entry', {
+      const { data } = await axios.post('/api/journal-entry', {
         user_id: 'demo_user',
         entry,
       });
@@ -28,7 +28,7 @@ export default function DailyJournal({ onBack }) {
   const submitReflection = async () => {
     try {
       if (entryId) {
-        await axios.post('/journal-reflection', {
+        await axios.post('/api/journal-reflection', {
           entry_id: entryId,
           reflection,
         });
