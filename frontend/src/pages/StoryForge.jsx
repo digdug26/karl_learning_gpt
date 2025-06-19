@@ -16,7 +16,7 @@ export default function StoryForge({ onBack }) {
 
   const fetchPrompt = async () => {
     try {
-      const { data } = await axios.get('/story-prompt');
+      const { data } = await axios.get('/api/story-prompt');
       setPrompt(data.prompt);
     } catch (e) {
       console.error('Failed to load prompt', e);
@@ -26,7 +26,7 @@ export default function StoryForge({ onBack }) {
   const submitStory = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.post('/submit-story', {
+      const { data } = await axios.post('/api/submit-story', {
         user_id: 'demo',
         prompt,
         story_text: story,
@@ -66,11 +66,11 @@ export default function StoryForge({ onBack }) {
       >
         <PenTool size={32} /> Story Forge
       </motion.h1>
-      <p className="text-gray-700 mb-4 text-center max-w-md">
+      <p className="text-gray-700 mb-4 text-center max-w-sm">
         {prompt || 'Loading prompt...'}
       </p>
       <textarea
-        className="w-full max-w-md h-40 p-4 border-2 border-gray-200 rounded-xl mb-4"
+        className="w-full max-w-sm h-40 p-4 border-2 border-gray-200 rounded-xl mb-4"
         value={story}
         onChange={(e) => setStory(e.target.value)}
         placeholder="Write your story here..."
