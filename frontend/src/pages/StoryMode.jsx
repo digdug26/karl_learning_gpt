@@ -40,7 +40,7 @@ export default function StoryMode({ onBack }) {
   }, []);
 
   const handleTypingDone = (correct) => {
-    console.log('typing complete', correct);
+    // Placeholder for future typing completion handling
   };
 
   const endSession = () => {
