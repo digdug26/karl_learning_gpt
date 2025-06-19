@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 
 class Demographics(BaseModel):
@@ -38,9 +38,16 @@ class Typing(BaseModel):
     current_wpm: int
 
 
+class StoryBadge(BaseModel):
+    type: str
+    story_id: str
+    img_url: str
+
+
 class History(BaseModel):
     sessions_completed: int
     badges: List[str]
+    story_badges: List[StoryBadge] = []
 
 
 class LearnerProfile(BaseModel):

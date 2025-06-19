@@ -6,6 +6,12 @@ from typing import Dict
 from .models.profile_v2 import LearnerProfile
 from .services.session_builder import build_session
 from .services.badges import evaluate_badges
+from .services.story_forge import (
+    get_random_prompt,
+    save_story,
+    generate_image,
+    add_story_badge,
+)
 
 app = FastAPI()
 
@@ -21,6 +27,18 @@ class EndPayload(BaseModel):
     session_metrics: Dict[str, int]
 
 
+class StoryPayload(BaseModel):
+    user_id: str
+    prompt: str
+    story_text: str
+
+
+class BadgePayload(BaseModel):
+    profile: LearnerProfile
+    story_id: str
+    img_url: str
+
+
 @app.post("/next-session")
 async def next_session(payload: SessionPayload):
     """Return the next learning session based on the v2 learner profile."""
@@ -32,3 +50,24 @@ async def end_session(payload: EndPayload):
     """Finalize a session and evaluate badges earned."""
     earned = evaluate_badges(payload.profile, payload.session_metrics)
     return {"earned_badges": earned, "profile": payload.profile}
+
+
+@app.get("/story-prompt")
+async def story_prompt():
+    """Return a random story prompt."""
+    return {"prompt": get_random_prompt()}
+
+
+@app.post("/submit-story")
+async def submit_story(payload: StoryPayload):
+    """Save a story and generate an illustration."""
+    story = save_story(payload.user_id, payload.prompt, payload.story_text)
+    img_url = generate_image(payload.prompt, payload.story_text, story["id"])
+    return {"story_id": story["id"], "img_url": img_url}
+
+
+@app.post("/add-story-badge")
+async def add_story_badge_endpoint(payload: BadgePayload):
+    """Copy image to badge collection and update profile."""
+    badge = add_story_badge(payload.profile, payload.story_id, payload.img_url)
+    return {"badge": badge, "profile": payload.profile}
