@@ -59,22 +59,22 @@ export default function Home({ onStart }) {
       {/* Main Content */}
       <div className="text-center mb-12 z-10">
         <motion.h1
-          className="font-display text-6xl font-bold text-comicInk mb-4 drop-shadow-lg"
+          className="font-body text-7xl font-extrabold text-hero-600 mb-8 drop-shadow-lg"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ 
+          transition={{
             duration: 0.8,
             ease: "easeOut"
           }}
         >
           Karl's
         </motion.h1>
-        
+
         <motion.h2
-          className="font-display text-5xl font-bold bg-gradient-to-r from-ocean-600 to-hero-600 bg-clip-text text-transparent mb-8 drop-shadow-sm"
+          className="font-body text-6xl font-extrabold text-energy-600 mb-8 drop-shadow-sm"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ 
+          transition={{
             duration: 0.8,
             delay: 0.2,
             ease: "easeOut"

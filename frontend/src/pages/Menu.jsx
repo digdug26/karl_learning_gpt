@@ -59,6 +59,18 @@ export default function Menu({ onSelect, onBack }) {
         </p>
       </motion.div>
 
+      {/* Encouraging message */}
+      <motion.div
+        className="text-center mb-8 z-10"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
+        <p className="text-gray-500 font-medium">
+          🌟 Every choice leads to awesome learning! 🌟
+        </p>
+      </motion.div>
+
       {/* Menu Buttons */}
       <div className="flex flex-col gap-8 w-full max-w-md z-10 items-center">
         {menuItems.map((item, index) => (
@@ -150,20 +162,6 @@ export default function Menu({ onSelect, onBack }) {
         </motion.div>
       )}
 
-      {/* Fun encouragement */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ 
-          duration: 0.8,
-          delay: 1
-        }}
-      >
-        <p className="text-gray-500 font-medium">
-          🌟 Every choice leads to awesome learning! 🌟
-        </p>
-      </motion.div>
     </div>
   );
 }
