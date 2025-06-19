@@ -1,8 +1,11 @@
 import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Camera } from 'lucide-react';
+import { Button } from './components/ui/button';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 
-export default function WebcamSnap({ threadId, onMood }) {
+export default function WebcamSnap({ threadId, onMood, className }) {
   const camRef = useRef();
 
   const shoot = async () => {
@@ -15,20 +18,32 @@ export default function WebcamSnap({ threadId, onMood }) {
       const res = await axios.post('/api/submit_mood', form);
       onMood(res.data.mood_score);
     } catch (e) {
-      console.error("Mood check failed:", e);
+      console.error('Mood check failed:', e);
     }
   };
 
   return (
-    <div className="inline-block mr-4">
+    <div className={className}>
       <Webcam
         ref={camRef}
         audio={false}
         screenshotFormat="image/png"
         width={0}
         height={0}
+        style={{ display: 'none' }}
       />
-      <button onClick={shoot}>📸 Mood check</button>
+
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <Button
+          variant="adventure"
+          size="lg"
+          onClick={shoot}
+          className="min-w-[140px] shadow-glow-green"
+        >
+          <Camera size={24} className="mr-2" />
+          Mood Check
+        </Button>
+      </motion.div>
     </div>
   );
 }
