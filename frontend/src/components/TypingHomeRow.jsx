@@ -5,7 +5,7 @@ import { Keyboard, CheckCircle, XCircle, RotateCcw, Clock, AlertCircle } from 'l
 import { Button } from './ui/button';
 import sample from '../utils/sampleHomeRowText';
 
-export function TypingHomeRow({ onFinish }) {
+export default function TypingHomeRow({ onFinish }) {
   const [text] = useState(sample());
   const [input, setInput] = useState('');
   const [isComplete, setIsComplete] = useState(false);
@@ -341,3 +341,4 @@ export function SessionTimer({ maxMinutes, children, onHardCap }) {
     </div>
   );
 }
+
