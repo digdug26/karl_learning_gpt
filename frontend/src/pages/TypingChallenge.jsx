@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Button } from '../components/ui/button';
 import TypingHomeRow from '../components/TypingHomeRow';
+import StoryForge from './StoryForge';
 import DailyJournal from './DailyJournal';
-import { Keyboard, ListTodo, Goal, ArrowLeft, NotebookPen } from 'lucide-react';
+import { Keyboard, PenTool, ArrowLeft, NotebookPen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function TypingChallenge({ onBack }) {
@@ -16,10 +17,10 @@ export default function TypingChallenge({ onBack }) {
       icon: Keyboard,
     },
     {
-      id: 'words',
-      title: 'Word Sprint',
-      subtitle: 'Coming soon',
-      icon: ListTodo,
+      id: 'forge',
+      title: 'Story Forge',
+      subtitle: 'Create a short story',
+      icon: PenTool,
     },
     {
       id: 'journal',
@@ -40,6 +41,12 @@ export default function TypingChallenge({ onBack }) {
         </div>
         <TypingHomeRow />
       </div>
+    );
+  }
+
+  if (activity === 'forge') {
+    return (
+      <StoryForge onBack={() => setActivity(null)} />
     );
   }
 
@@ -78,9 +85,14 @@ export default function TypingChallenge({ onBack }) {
               size="lg"
               onClick={() => {
                 if (item.id === 'basics') setActivity('basics');
+                if (item.id === 'forge') setActivity('forge');
                 if (item.id === 'journal') setActivity('journal');
               }}
-              disabled={item.id === 'words'}
+              disabled={
+                item.id !== 'basics' &&
+                item.id !== 'forge' &&
+                item.id !== 'journal'
+              }
               className="w-72 h-20 justify-start text-left border-3"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-energy-400 to-energy-600 opacity-90" />
