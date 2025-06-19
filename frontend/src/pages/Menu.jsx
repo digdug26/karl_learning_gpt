@@ -34,7 +34,7 @@ export default function Menu({ onSelect, onBack }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-lightMist via-sky-100 to-adventure-100 flex flex-col items-center justify-center p-8 relative">
+    <div className="min-h-screen bg-sky-200 flex flex-col items-center justify-center p-8 relative">
       
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
@@ -60,7 +60,7 @@ export default function Menu({ onSelect, onBack }) {
       </motion.div>
 
       {/* Menu Buttons */}
-      <div className="flex flex-col gap-8 w-full max-w-md z-10">
+      <div className="flex flex-col gap-8 w-full max-w-md z-10 items-center">
         {menuItems.map((item, index) => (
           <motion.div
             key={item.id}
@@ -78,7 +78,7 @@ export default function Menu({ onSelect, onBack }) {
               variant={item.variant}
               size="lg"
               onClick={() => onSelect(item.id)}
-              className={`w-full h-20 justify-start text-left shadow-${item.glowColor} hover:shadow-${item.glowColor} group relative overflow-hidden border-3`}
+              className={`w-72 h-20 justify-start text-left shadow-${item.glowColor} hover:shadow-${item.glowColor} group relative overflow-hidden border-3`}
             >
               {/* Background gradient animation */}
               <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />

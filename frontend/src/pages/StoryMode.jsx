@@ -86,7 +86,7 @@ export default function StoryMode({ onBack }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-lightMist via-sky-50 to-adventure-50 relative">
+    <div className="min-h-screen bg-sky-200 relative">
       
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">

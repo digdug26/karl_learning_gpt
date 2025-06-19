@@ -4,7 +4,7 @@ import { Rocket, Stars, Zap } from "lucide-react";
 
 export default function Home({ onStart }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-200 via-ocean-100 to-adventure-100 flex flex-col items-center justify-center p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-sky-200 flex flex-col items-center justify-center p-8 relative overflow-hidden">
       
       {/* Floating Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -133,21 +133,6 @@ export default function Home({ onStart }) {
             Start Karl's Adventure!
           </span>
           
-          {/* Sparkle effect */}
-          <motion.div
-            className="absolute -top-2 -right-2"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360]
-            }}
-            transition={{ 
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <Stars size={24} className="text-sunshine-400" />
-          </motion.div>
         </Button>
       </motion.div>
 
