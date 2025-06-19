@@ -61,7 +61,12 @@ export default function StoryMode({ onBack }) {
       const actRes = await axios.get('/api/next_activity', {
         params: { thread_id: data.thread_id }
       });
-      setActivity(JSON.parse(actRes.data.activity));
+      try {
+        setActivity(JSON.parse(actRes.data.activity));
+      } catch (err) {
+        console.error('Failed to parse activity:', err);
+        setActivity(null);
+      }
     } catch (e) {
       console.error("Error starting session:", e);
     } finally {
@@ -77,7 +82,12 @@ export default function StoryMode({ onBack }) {
       const { data } = await axios.get('/api/next_activity', {
         params: { thread_id: threadId }
       });
-      setActivity(JSON.parse(data.activity));
+      try {
+        setActivity(JSON.parse(data.activity));
+      } catch (err) {
+        console.error('Failed to parse activity:', err);
+        setActivity(null);
+      }
     } catch (e) {
       console.error("Error fetching activity:", e);
     } finally {
