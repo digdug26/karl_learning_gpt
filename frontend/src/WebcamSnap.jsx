@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Camera } from 'lucide-react';
 import { Button } from './components/ui/button';
@@ -21,6 +21,15 @@ export default function WebcamSnap({ threadId, onMood, className }) {
       console.error('Mood check failed:', e);
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (threadId) {
+        shoot();
+      }
+    }, 600000); // 10 minutes
+    return () => clearInterval(interval);
+  }, [threadId]);
 
   return (
     <div className={className}>

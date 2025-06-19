@@ -2122,7 +2122,8 @@ async def learning_session():
             }
 
             function startMoodMonitoring() {
-                moodCheckInterval = setInterval(checkMoodAutomatically, 120000);
+                // Run automatic mood checks every 10 minutes
+                moodCheckInterval = setInterval(checkMoodAutomatically, 600000);
                 updateMoodStatus('Active 😊');
             }
 
