@@ -290,3 +290,5 @@ export default function StoryMode({ onBack }) {
         </AnimatePresence>
       </div>
     </div>
+  );
+}
