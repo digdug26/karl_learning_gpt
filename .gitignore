@@ -13,3 +13,5 @@ venv/
 Thumbs.db
 # Credentials and environment files
 *.env
+backend/data/journal_entries.json
+backend/data/journal_badges.json
