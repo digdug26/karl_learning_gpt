@@ -111,4 +111,21 @@ async def next_activity(thread_id: str):
     else:
         reply = str(content_parts)
 
+    cleaned = reply.strip()
+    if cleaned.startswith("```"):
+        # drop the starting fence line like ```json
+        cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned
+        if cleaned.endswith("```"):
+            cleaned = cleaned.rsplit("```", 1)[0]
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
+    if start != -1 and end != -1:
+        cleaned = cleaned[start:end+1]
+
+    try:
+        json.loads(cleaned)
+        reply = cleaned
+    except json.JSONDecodeError:
+        pass
+
     return {"activity": reply}
