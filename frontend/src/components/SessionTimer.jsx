@@ -13,7 +13,9 @@ export default function SessionTimer({ maxMinutes, children, onHardCap }) {
   return (
     <div>
       <div className="text-xs text-gray-500">⏱ {elapsed}/{maxMinutes} min</div>
-      {children}
+      {typeof children === "function"
+        ? children({ elapsed, maxMinutes })
+        : children}
     </div>
   );
 }
