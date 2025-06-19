@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { BookOpen, Gamepad2, Image as ImageIcon, ArrowLeft } from "lucide-react";
+import { BookOpen, Keyboard, Image as ImageIcon, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Menu({ onSelect, onBack }) {
@@ -17,7 +17,7 @@ export default function Menu({ onSelect, onBack }) {
       id: "game",
       title: "Typing Challenge",
       subtitle: "Practice your typing skills",
-      icon: Gamepad2,
+      icon: Keyboard,
       variant: "energy",
       gradient: "from-energy-400 to-energy-600",
       glowColor: "glow-orange"
@@ -51,7 +51,7 @@ export default function Menu({ onSelect, onBack }) {
         <h1 className="font-display text-5xl font-bold text-comicInk mb-4">
           Choose Your
         </h1>
-        <h2 className="font-display text-4xl font-bold bg-gradient-to-r from-ocean-600 to-hero-600 bg-clip-text text-transparent">
+        <h2 className="font-display text-4xl font-bold text-black">
           Adventure Mode!
         </h2>
         <p className="text-lg text-gray-600 mt-4 max-w-md mx-auto">
@@ -90,14 +90,14 @@ export default function Menu({ onSelect, onBack }) {
               variant={item.variant}
               size="lg"
               onClick={() => onSelect(item.id)}
-              className={`w-72 h-20 justify-start text-left shadow-${item.glowColor} hover:shadow-${item.glowColor} group relative overflow-hidden border-3`}
+              className={`w-full h-20 justify-start text-left shadow-${item.glowColor} hover:shadow-${item.glowColor} group relative overflow-hidden border-3`}
             >
               {/* Background gradient animation */}
               <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
               
               {/* Icon */}
               <motion.div
-                className="relative z-10 mr-6 p-3 bg-white/20 rounded-xl backdrop-blur-sm"
+                className="relative z-10 mr-8 p-3 bg-white/20 rounded-xl backdrop-blur-sm"
                 whileHover={{ rotate: 5 }}
                 transition={{ duration: 0.2 }}
               >
