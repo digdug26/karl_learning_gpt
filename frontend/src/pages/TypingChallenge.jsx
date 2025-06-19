@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Button } from '../components/ui/button';
 import TypingHomeRow from '../components/TypingHomeRow';
-import { Keyboard, ListTodo, Goal, ArrowLeft } from 'lucide-react';
+import DailyJournal from './DailyJournal';
+import { Keyboard, ListTodo, Goal, ArrowLeft, NotebookPen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function TypingChallenge({ onBack }) {
@@ -21,10 +22,10 @@ export default function TypingChallenge({ onBack }) {
       icon: ListTodo,
     },
     {
-      id: 'sentences',
-      title: 'Sentence Dash',
-      subtitle: 'Coming soon',
-      icon: Goal,
+      id: 'journal',
+      title: 'Daily Journal',
+      subtitle: 'Reflect on your day',
+      icon: NotebookPen,
     },
   ];
 
@@ -40,6 +41,10 @@ export default function TypingChallenge({ onBack }) {
         <TypingHomeRow />
       </div>
     );
+  }
+
+  if (activity === 'journal') {
+    return <DailyJournal onBack={() => setActivity(null)} />;
   }
 
   return (
@@ -71,8 +76,11 @@ export default function TypingChallenge({ onBack }) {
             <Button
               variant="energy"
               size="lg"
-              onClick={() => item.id === 'basics' && setActivity('basics')}
-              disabled={item.id !== 'basics'}
+              onClick={() => {
+                if (item.id === 'basics') setActivity('basics');
+                if (item.id === 'journal') setActivity('journal');
+              }}
+              disabled={item.id === 'words'}
               className="w-72 h-20 justify-start text-left border-3"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-energy-400 to-energy-600 opacity-90" />

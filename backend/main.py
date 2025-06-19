@@ -12,6 +12,7 @@ from .services.story_forge import (
     generate_image,
     add_story_badge,
 )
+from .services.journal import create_entry, add_reflection
 
 app = FastAPI()
 
@@ -37,6 +38,16 @@ class BadgePayload(BaseModel):
     profile: LearnerProfile
     story_id: str
     img_url: str
+
+
+class JournalEntryPayload(BaseModel):
+    user_id: str
+    entry: str
+
+
+class ReflectionPayload(BaseModel):
+    entry_id: str
+    reflection: str
 
 
 @app.post("/next-session")
@@ -71,3 +82,20 @@ async def add_story_badge_endpoint(payload: BadgePayload):
     """Copy image to badge collection and update profile."""
     badge = add_story_badge(payload.profile, payload.story_id, payload.img_url)
     return {"badge": badge, "profile": payload.profile}
+
+
+@app.post("/journal-entry")
+async def journal_entry(payload: JournalEntryPayload):
+    """Create a new journal entry and return a reflection question."""
+    entry, question, badge = create_entry(payload.user_id, payload.entry)
+    resp = {"entry_id": entry["id"], "question": question}
+    if badge:
+        resp["badge"] = badge
+    return resp
+
+
+@app.post("/journal-reflection")
+async def journal_reflection(payload: ReflectionPayload):
+    """Attach a reflection answer to an entry."""
+    entry = add_reflection(payload.entry_id, payload.reflection)
+    return {"entry": entry}
