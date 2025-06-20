@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 
 from fastapi import FastAPI, UploadFile, File, Form
+from pydantic import BaseModel
 from dotenv import load_dotenv
 
 import openai
@@ -34,6 +35,26 @@ assistant_id = client.beta.assistants.create(
     tools=[{"type": "code_interpreter"}],
     instructions=filled_prompts
 ).id
+
+# --- Story Forge helpers ---------------------------------------------------
+from backend.services.story_forge import (
+    get_random_prompt,
+    save_story,
+    generate_image,
+    add_story_badge,
+)
+
+
+class StoryPayload(BaseModel):
+    user_id: str
+    prompt: str
+    story_text: str
+
+
+class BadgePayload(BaseModel):
+    profile: LearnerProfile
+    story_id: str
+    img_url: str
 
 
 @app.post("/start_session")
@@ -129,3 +150,28 @@ async def next_activity(thread_id: str):
         pass
 
     return {"activity": reply}
+
+
+# ---------------------------------------------------------------------------
+# Story Forge API endpoints
+# ---------------------------------------------------------------------------
+
+@app.get("/story-prompt")
+async def story_prompt():
+    """Return a random story prompt."""
+    return {"prompt": get_random_prompt()}
+
+
+@app.post("/submit-story")
+async def submit_story(payload: StoryPayload):
+    """Save a story and generate an illustration."""
+    story = save_story(payload.user_id, payload.prompt, payload.story_text)
+    img_url = generate_image(payload.prompt, payload.story_text, story["id"])
+    return {"story_id": story["id"], "img_url": img_url}
+
+
+@app.post("/add-story-badge")
+async def add_story_badge_endpoint(payload: BadgePayload):
+    """Copy image to badge collection and update profile."""
+    badge = add_story_badge(payload.profile, payload.story_id, payload.img_url)
+    return {"badge": badge, "profile": payload.profile}
