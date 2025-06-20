@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { BookOpen, Keyboard, Image as ImageIcon, ArrowLeft } from "lucide-react";
+import { BookOpen, Keyboard, Image as ImageIcon, ArrowLeft, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Menu({ onSelect, onBack }) {
@@ -30,6 +30,15 @@ export default function Menu({ onSelect, onBack }) {
       variant: "secondary",
       gradient: "from-hero-400 to-hero-600",
       glowColor: "glow-blue"
+    },
+    {
+      id: "accomplishments",
+      title: "Accomplishments",
+      subtitle: "View earned badges",
+      icon: Award,
+      variant: "utility",
+      gradient: "from-sunshine-400 to-sunshine-600",
+      glowColor: "glow-yellow"
     }
   ];
 

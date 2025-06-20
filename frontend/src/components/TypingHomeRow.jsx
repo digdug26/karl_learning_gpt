@@ -3,36 +3,88 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Keyboard, CheckCircle, XCircle, RotateCcw, Clock, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
-import sample from '../utils/sampleHomeRowText';
+import generatePracticeText from '../utils/generatePracticeText';
+import { loadProgress, saveProgress, alphabet, randomSticker } from '../utils/typingProgress';
 
 export default function TypingHomeRow({ onFinish }) {
-  const [text] = useState(sample());
+  const [progress, setProgress] = useState(() => loadProgress());
+  const [text, setText] = useState(() => generatePracticeText(progress.lettersCount));
   const [input, setInput] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [usedBackspace, setUsedBackspace] = useState(false);
+  const [stageMsg, setStageMsg] = useState('');
+
+  useEffect(() => {
+    if (stageMsg) {
+      const id = setTimeout(() => setStageMsg(''), 4000);
+      return () => clearTimeout(id);
+    }
+  }, [stageMsg]);
   
   const correct = text.slice(0, input.length) === input;
   const complete = input === text && input.length > 0;
   
-  // Handle completion
-  React.useEffect(() => {
+  // Save progress whenever it changes
+  useEffect(() => {
+    saveProgress(progress);
+  }, [progress]);
+
+  // Handle completion logic including streak tracking
+  useEffect(() => {
     if (complete && !isComplete) {
       setIsComplete(true);
       setShowResult(true);
+
+      setProgress((prev) => {
+        let updated = { ...prev };
+        if (correct && !usedBackspace) {
+          updated.streak += 1;
+        } else {
+          updated.streak = 0;
+        }
+
+        if (updated.streak >= 5) {
+          if (updated.lettersCount < alphabet.length) {
+            updated.lettersCount += 1;
+            updated.streak = 0;
+            setStageMsg(`Congrats! You mastered Stage ${updated.lettersCount - 1}!`);
+            const stage = updated.lettersCount - 1;
+            if ([5,10,15,20,25].includes(stage)) {
+              updated.achievements.push({ type: 'sticker', icon: randomSticker(), stage });
+            }
+            if (stage === 26) {
+              updated.badge = { icon: '🏆', stage };
+            }
+          } else if (!updated.badge) {
+            updated.streak = 0;
+            const stage = alphabet.length;
+            setStageMsg(`Congrats! You mastered Stage ${stage}!`);
+            updated.badge = { icon: '🏆', stage };
+          }
+        }
+        return updated;
+      });
+
       onFinish?.(correct);
-      
-      // Auto-hide result after 3 seconds
+
       setTimeout(() => {
         setShowResult(false);
       }, 3000);
     }
-  }, [complete, isComplete, correct, onFinish]);
+  }, [complete, isComplete, correct, usedBackspace, onFinish]);
 
   const resetExercise = () => {
     setInput('');
     setIsComplete(false);
     setShowResult(false);
+    setUsedBackspace(false);
+    setText(generatePracticeText(progress.lettersCount));
   };
+
+  useEffect(() => {
+    setText(generatePracticeText(progress.lettersCount));
+  }, [progress.lettersCount]);
 
   // Character-by-character display with color coding
   const renderText = () => {
@@ -96,6 +148,23 @@ export default function TypingHomeRow({ onFinish }) {
         </div>
       </div>
 
+      {/* Mastery progress bar */}
+      <div className="mt-6">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Mastery Progress:</label>
+        <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-adventure-400 to-adventure-600"
+            initial={{ width: 0 }}
+            animate={{ width: `${(progress.lettersCount / alphabet.length) * 100}%` }}
+            transition={{ duration: 0.5 }}
+          />
+        </div>
+        <div className="text-right text-xs font-mono text-gray-600 mt-1">
+          {progress.lettersCount}/{alphabet.length} letters
+        </div>
+      </div>
+    </div>
+
       {/* Input field */}
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/50 shadow-soft">
         <label className="block text-sm font-semibold text-gray-700 mb-3">
@@ -104,6 +173,9 @@ export default function TypingHomeRow({ onFinish }) {
         <input
           type="text"
           value={input}
+          onKeyDown={(e) => {
+            if (e.key === 'Backspace') setUsedBackspace(true);
+          }}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Start typing here..."
           className={`w-full p-4 text-xl font-mono rounded-xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-ocean-300 ${
@@ -211,6 +283,17 @@ export default function TypingHomeRow({ onFinish }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {stageMsg && (
+        <motion.div
+          className="mt-4 bg-gradient-to-r from-hero-400 to-energy-500 text-white rounded-xl p-4 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {stageMsg}
+        </motion.div>
+      )}
 
       {/* Typing Tips */}
       <motion.div
