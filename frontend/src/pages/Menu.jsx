@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { BookOpen, Keyboard, Image as ImageIcon, ArrowLeft, Award } from "lucide-react";
+import { BookOpen, Keyboard, Image as ImageIcon, ArrowLeft, Award, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Menu({ onSelect, onBack }) {
@@ -7,170 +7,148 @@ export default function Menu({ onSelect, onBack }) {
     {
       id: "story",
       title: "Story Mode",
-      subtitle: "Read amazing adventures with Karl",
+      subtitle: "Read interactive adventures and improve comprehension skills",
       icon: BookOpen,
-      variant: "adventure",
-      gradient: "from-adventure-400 to-adventure-600",
-      glowColor: "glow-green"
+      iconColor: "text-green-600",
+      bgColor: "bg-green-50",
+      borderColor: "border-green-200",
+      hoverColor: "hover:bg-green-100"
     },
     {
       id: "game",
       title: "Typing Challenge",
-      subtitle: "Practice your typing skills",
+      subtitle: "Practice typing accuracy and speed with fun exercises",
       icon: Keyboard,
-      variant: "energy",
-      gradient: "from-energy-400 to-energy-600",
-      glowColor: "glow-orange"
+      iconColor: "text-blue-600",
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
+      hoverColor: "hover:bg-blue-100"
     },
     {
       id: "draw",
       title: "Comic Pad",
-      subtitle: "Create your own comic stories",
+      subtitle: "Create your own comic stories and express creativity",
       icon: ImageIcon,
-      variant: "secondary",
-      gradient: "from-hero-400 to-hero-600",
-      glowColor: "glow-blue"
+      iconColor: "text-purple-600",
+      bgColor: "bg-purple-50",
+      borderColor: "border-purple-200",
+      hoverColor: "hover:bg-purple-100"
     },
     {
       id: "accomplishments",
       title: "Accomplishments",
-      subtitle: "View earned badges",
+      subtitle: "View earned badges and track your learning progress",
       icon: Award,
-      variant: "utility",
-      gradient: "from-sunshine-400 to-sunshine-600",
-      glowColor: "glow-yellow"
+      iconColor: "text-yellow-600",
+      bgColor: "bg-yellow-50",
+      borderColor: "border-yellow-200",
+      hoverColor: "hover:bg-yellow-100"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-sky-200 flex flex-col items-center justify-center p-8 relative">
-      
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_theme(colors.ocean.500)_1px,_transparent_1px)] bg-[length:50px_50px]"></div>
-      </div>
-
+    <div className="space-y-6">
       {/* Header */}
       <motion.div
-        className="text-center mb-16 z-10"
-        initial={{ opacity: 0, y: -30 }}
+        className="text-center"
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="font-display text-5xl font-bold text-comicInk mb-4">
-          Choose Your
+        <h1 className="text-3xl font-bold text-slate-900 mb-2">
+          Choose Your Activity
         </h1>
-        <h2 className="font-display text-4xl font-bold text-black">
-          Adventure Mode!
-        </h2>
-        <p className="text-lg text-gray-600 mt-4 max-w-md mx-auto">
-          Pick what you'd like to do today. Each mode is packed with fun learning!
+        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          Select from our engaging learning activities. Each one is designed to help you grow and have fun!
         </p>
       </motion.div>
 
-      {/* Encouraging message */}
-      <motion.div
-        className="text-center mb-8 z-10"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-      >
-        <p className="text-gray-500 font-medium">
-          🌟 Every choice leads to awesome learning! 🌟
-        </p>
-      </motion.div>
-
-      {/* Menu Buttons */}
-      <div className="flex flex-col gap-8 w-full max-w-md z-10 items-center">
+      {/* Activity Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {menuItems.map((item, index) => (
           <motion.div
             key={item.id}
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ 
               duration: 0.6,
-              delay: index * 0.15,
+              delay: index * 0.1,
               ease: "easeOut"
             }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <Button
-              variant={item.variant}
-              size="lg"
+            <button
               onClick={() => onSelect(item.id)}
-              className={`w-full h-20 justify-start text-left shadow-${item.glowColor} hover:shadow-${item.glowColor} group relative overflow-hidden border-3`}
+              className={`w-full p-6 rounded-lg shadow-sm border transition-all duration-200 text-left group ${item.bgColor} ${item.borderColor} ${item.hoverColor} hover:shadow-md`}
             >
-              {/* Background gradient animation */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`} />
-              
-              {/* Icon */}
-              <motion.div
-                className="relative z-10 mr-8 p-3 bg-white/20 rounded-xl backdrop-blur-sm"
-                whileHover={{ rotate: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <item.icon size={32} className="text-white" />
-              </motion.div>
-              
-              {/* Text content */}
-              <div className="relative z-10 flex-1">
-                <h3 className="text-2xl font-bold text-white mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-white/90 text-sm font-medium">
-                  {item.subtitle}
-                </p>
-              </div>
-
-              {/* Arrow indicator */}
-              <motion.div
-                className="relative z-10 ml-4"
-                initial={{ x: 0 }}
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <motion.div
-                    animate={{ x: [0, 3, 0] }}
-                    transition={{ 
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    →
-                  </motion.div>
+              <div className="flex items-start space-x-4">
+                {/* Icon */}
+                <div className={`p-3 rounded-lg bg-white border ${item.borderColor} group-hover:scale-105 transition-transform duration-200`}>
+                  <item.icon className={`h-6 w-6 ${item.iconColor}`} />
                 </div>
-              </motion.div>
-            </Button>
+                
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-slate-800">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {item.subtitle}
+                  </p>
+                </div>
+
+                {/* Arrow indicator */}
+                <div className="flex-shrink-0">
+                  <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-slate-600 group-hover:translate-x-1 transition-all duration-200" />
+                </div>
+              </div>
+            </button>
           </motion.div>
         ))}
       </div>
 
-      {/* Back Button */}
-      {onBack && (
-        <motion.div
-          className="mt-12 z-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.6,
-            delay: 0.6
-          }}
-        >
-          <Button
-            variant="utility"
-            size="lg"
-            onClick={onBack}
-            className="hover:shadow-medium"
-          >
-            <ArrowLeft size={28} className="mr-2" />
-            Back to Home
-          </Button>
-        </motion.div>
-      )}
+      {/* Stats Overview */}
+      <motion.div
+        className="bg-white rounded-lg shadow-sm border border-slate-200 p-6 max-w-4xl mx-auto mt-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.6,
+          delay: 0.5
+        }}
+      >
+        <h3 className="text-lg font-semibold text-slate-900 mb-4">Your Progress Overview</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="text-center p-4 bg-slate-50 rounded-lg">
+            <div className="text-2xl font-bold text-green-600 mb-1">12</div>
+            <div className="text-sm text-slate-600">Stories Read</div>
+          </div>
+          <div className="text-center p-4 bg-slate-50 rounded-lg">
+            <div className="text-2xl font-bold text-blue-600 mb-1">45</div>
+            <div className="text-sm text-slate-600">WPM Typing Speed</div>
+          </div>
+          <div className="text-center p-4 bg-slate-50 rounded-lg">
+            <div className="text-2xl font-bold text-purple-600 mb-1">8</div>
+            <div className="text-sm text-slate-600">Badges Earned</div>
+          </div>
+        </div>
+      </motion.div>
 
+      {/* Encouragement message */}
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ 
+          duration: 0.6,
+          delay: 0.7
+        }}
+      >
+        <p className="text-slate-500 text-sm">
+          🌟 Great job on your learning journey! Keep up the excellent work! 🌟
+        </p>
+      </motion.div>
     </div>
   );
 }

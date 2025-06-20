@@ -5,5 +5,19 @@
     "date": "2025-06-19T05:20:06.955063",
     "prompt": "A penguin",
     "story_text": "finds treasure"
+  },
+  {
+    "id": "41ed6897-0eb2-472f-bc4f-09ca35a9f833",
+    "user_id": "demo",
+    "date": "2025-06-20T02:00:43.708570",
+    "prompt": "A robot finds an ancient map under the desert sands...",
+    "story_text": "and then a lot of zombified mummies made of ice cream sandwiches came through the walls. The robot must perform kung-fu to fight off the zombie mummies and escape with the ancient map. "
+  },
+  {
+    "id": "1873a07d-1172-4aef-b24c-2a6c7ec8b29a",
+    "user_id": "demo",
+    "date": "2025-06-20T04:11:38.767587",
+    "prompt": "An explorer stumbles upon a talking tree in the jungle...",
+    "story_text": "the tree grants the explorer three wishes, the man wishes for bravery, strawberries and a talking monkey. "
   }
 ]
