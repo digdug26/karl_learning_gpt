@@ -1,6 +1,6 @@
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
-import { Rocket, Stars, Zap, BookOpen } from "lucide-react";
+import { Rocket, Stars, Zap, BookOpen, Keyboard } from "lucide-react";
 
 export default function Home({ onStart }) {
   return (
@@ -163,6 +163,3 @@ export default function Home({ onStart }) {
     </div>
   );
 }
-
-// Import missing icon
-import { Keyboard } from "lucide-react";
