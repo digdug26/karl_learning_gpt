@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { cn } from "../../lib/utils"; // You may need to create this utility
+import { cn } from "../../lib/utils";
 
 const Button = forwardRef(({ className, variant, size, ...props }, ref) => {
   return (
@@ -60,10 +60,6 @@ const buttonVariants = ({ variant, size, className }) => {
   return `${base} ${variants[variant] || variants.default} ${sizes[size] || sizes.default} ${className || ''}`;
 };
 
-// Utility function for className merging (create this file if it doesn't exist)
-// src/lib/utils.js
-function cn(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+
 
 export { Button, buttonVariants };
