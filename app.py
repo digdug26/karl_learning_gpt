@@ -770,7 +770,7 @@ async def choose_activity():
             }
             .activity-card {
                 display: inline-block;
-                width: 350px;
+                width: 400px;
                 margin: 20px;
                 padding: 30px;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
