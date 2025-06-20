@@ -163,7 +163,6 @@ export default function TypingHomeRow({ onFinish }) {
           {progress.lettersCount}/{alphabet.length} letters
         </div>
       </div>
-    </div>
 
       {/* Input field */}
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/50 shadow-soft">
