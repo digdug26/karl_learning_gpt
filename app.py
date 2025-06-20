@@ -24,6 +24,7 @@ from pydantic import BaseModel, Field
 from openai import OpenAI
 from pinecone import Pinecone
 import uvicorn
+from utils import readaloud, mood
 
 # Load environment variables
 load_dotenv()
@@ -2739,6 +2740,93 @@ async def review_sessions():
     # =============================================================================
 # API ENDPOINTS (Hidden from User)
 # =============================================================================
+
+@app.post("/start_session")
+async def start_session():
+    """Create a new Assistant thread and return the thread ID."""
+    thread = client.beta.threads.create()
+    return {"thread_id": thread.id}
+
+@app.post("/submit_audio")
+async def submit_audio(
+    thread_id: str = Form(...),
+    audio: UploadFile = File(...)
+):
+    """Score read-aloud audio and send the result to the Assistant."""
+    metrics = readaloud.score(audio, passage_id="p1")
+    wpm = metrics["words_per_minute"]
+    errors = metrics["words_total"] - metrics["words_correct"]
+
+    profile.snapshots.append(
+        LearnerSnapshot(
+            timestamp=datetime.utcnow(),
+            wpm=wpm,
+            activity_id="read_snippet",
+        )
+    )
+
+    client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role="user",
+        content=f"Here is Karl's read-aloud result: {wpm} WPM, {errors} mistakes."
+    )
+
+    return {"status": "ok", **metrics}
+
+@app.post("/submit_mood")
+async def submit_mood(
+    thread_id: str = Form(...),
+    image: UploadFile = File(...)
+):
+    """Assess mood from an image and record the snapshot."""
+    mood_score = mood.assess_image(image)
+
+    profile.snapshots.append(
+        LearnerSnapshot(
+            timestamp=datetime.utcnow(),
+            mood_score=mood_score,
+            activity_id="face_snapshot",
+        )
+    )
+
+    return {"mood_score": mood_score}
+
+@app.get("/next_activity")
+async def next_activity(thread_id: str):
+    """Advance the Assistant thread and return the latest activity JSON."""
+    client.beta.threads.runs.create_and_poll(
+        thread_id=thread_id,
+        assistant_id=assistant_id,
+    )
+
+    messages = client.beta.threads.messages.list(thread_id=thread_id).data
+    if not messages:
+        return {"activity": "No activity generated yet."}
+
+    latest = messages[0]
+    content_parts = latest.content or []
+    if content_parts and hasattr(content_parts[0], "text"):
+        reply = content_parts[0].text.value
+    else:
+        reply = str(content_parts)
+
+    cleaned = reply.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned
+        if cleaned.endswith("```"):
+            cleaned = cleaned.rsplit("```", 1)[0]
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
+    if start != -1 and end != -1:
+        cleaned = cleaned[start:end + 1]
+
+    try:
+        json.loads(cleaned)
+        reply = cleaned
+    except json.JSONDecodeError:
+        pass
+
+    return {"activity": reply}
 
 @app.post("/api/start-adventure")
 async def start_adventure(request: Request):
