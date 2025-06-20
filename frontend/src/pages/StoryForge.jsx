@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { ArrowLeft, PenTool, Loader2, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { addStoryImage } from '../utils/storyImages';
 
 export default function StoryForge({ onBack }) {
   const [prompt, setPrompt] = useState('');
@@ -37,6 +38,7 @@ export default function StoryForge({ onBack }) {
         story_text: story,
       });
       setImageUrl(data.img_url);
+      addStoryImage(data.img_url);
     } catch (e) {
       console.error('Failed to submit story', e);
       setError('Failed to submit your story. Please try again.');

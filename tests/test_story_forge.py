@@ -20,6 +20,7 @@ def test_submit_story():
     assert resp.status_code == 200
     data = resp.json()
     assert 'story_id' in data and 'img_url' in data
+    assert data['img_url'].endswith('.jpeg')
     img_path = pathlib.Path(data['img_url'])
     assert img_path.exists()
     img_path.unlink(missing_ok=True)

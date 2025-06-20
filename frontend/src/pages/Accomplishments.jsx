@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Award, Trophy, Target, TrendingUp, Calendar } from 'lucide-react';
+import { Award, Trophy, Target, TrendingUp, Calendar, PenTool } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { loadProgress, alphabet } from '../utils/typingProgress';
+import { loadStoryImages } from '../utils/storyImages';
 
 export default function Accomplishments({ onBack }) {
   const [progress, setProgress] = useState(() => loadProgress());
+  const [storyImages, setStoryImages] = useState(() => loadStoryImages());
 
   useEffect(() => {
     setProgress(loadProgress());
+    setStoryImages(loadStoryImages());
   }, []);
 
   const progressPercentage = (progress.lettersCount / alphabet.length) * 100;
@@ -242,6 +245,26 @@ export default function Accomplishments({ onBack }) {
           </div>
         )}
       </motion.div>
+
+      {/* Story Illustrations */}
+      {storyImages.length > 0 && (
+        <motion.div
+          className="bg-white rounded-lg shadow-sm border border-slate-200 p-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <div className="flex items-center space-x-3 mb-4">
+            <PenTool className="h-6 w-6 text-purple-600" />
+            <h3 className="text-lg font-semibold text-slate-900">Story Illustrations</h3>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {storyImages.map((url, idx) => (
+              <img key={idx} src={url} alt="Story" className="w-32 h-32 object-cover rounded" />
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       {/* Encouragement Message */}
       <motion.div
