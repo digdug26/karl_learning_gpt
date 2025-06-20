@@ -34,8 +34,8 @@ export default function TypingChallenge({ onBack }) {
     return (
       <div className="min-h-screen bg-sky-200 p-8 flex flex-col items-center">
         <div className="self-start mb-6">
-          <Button variant="utility" size="md" onClick={() => setActivity(null)}>
-            <ArrowLeft size={20} className="mr-2" />
+          <Button variant="utility" size="lg" onClick={() => setActivity(null)}>
+            <ArrowLeft size={28} className="mr-2" />
             Back
           </Button>
         </div>
@@ -109,8 +109,8 @@ export default function TypingChallenge({ onBack }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
       >
-        <Button variant="utility" size="md" onClick={onBack} className="hover:shadow-medium">
-          <ArrowLeft size={20} className="mr-2" />
+      <Button variant="utility" size="lg" onClick={onBack} className="hover:shadow-medium">
+          <ArrowLeft size={28} className="mr-2" />
           Back to Menu
         </Button>
       </motion.div>

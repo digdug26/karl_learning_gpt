@@ -150,11 +150,11 @@ export default function StoryMode({ onBack }) {
 
             <Button
               variant="utility"
-              size="sm"
+              size="lg"
               onClick={onBack}
               className="hover:shadow-medium"
             >
-              <Home size={16} className="mr-2" />
+              <Home size={28} className="mr-2" />
               Exit
             </Button>
           </motion.div>

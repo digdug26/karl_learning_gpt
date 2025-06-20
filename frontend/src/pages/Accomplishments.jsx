@@ -14,8 +14,8 @@ export default function Accomplishments({ onBack }) {
   return (
     <div className="min-h-screen bg-sky-200 p-8 flex flex-col items-center">
       <div className="self-start mb-6">
-        <Button variant="utility" size="md" onClick={onBack}>
-          <ArrowLeft size={20} className="mr-2" />
+        <Button variant="utility" size="lg" onClick={onBack}>
+          <ArrowLeft size={28} className="mr-2" />
           Back
         </Button>
       </div>

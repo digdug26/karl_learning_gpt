@@ -43,9 +43,9 @@ export default function DailyJournal({ onBack }) {
     return (
       <div className="min-h-screen bg-sky-200 p-8 flex flex-col items-center">
         <div className="self-start mb-6">
-          <Button variant="utility" size="md" onClick={onBack}>
-            <ArrowLeft size={20} className="mr-2" /> Back
-          </Button>
+        <Button variant="utility" size="lg" onClick={onBack}>
+          <ArrowLeft size={28} className="mr-2" /> Back
+        </Button>
         </div>
         <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-soft">
           <p className="mb-4 text-gray-700 whitespace-pre-wrap">{entry}</p>
@@ -69,9 +69,9 @@ export default function DailyJournal({ onBack }) {
     return (
       <div className="min-h-screen bg-sky-200 p-8 flex flex-col items-center">
         <div className="self-start mb-6">
-          <Button variant="utility" size="md" onClick={onBack}>
-            <ArrowLeft size={20} className="mr-2" /> Back
-          </Button>
+        <Button variant="utility" size="lg" onClick={onBack}>
+          <ArrowLeft size={28} className="mr-2" /> Back
+        </Button>
         </div>
         <div className="bg-white rounded-2xl p-6 w-full max-w-lg text-center shadow-soft">
           <p className="font-semibold text-comicInk">Thanks for journaling today!</p>
@@ -83,8 +83,8 @@ export default function DailyJournal({ onBack }) {
   return (
     <div className="min-h-screen bg-sky-200 p-8 flex flex-col items-center">
       <div className="self-start mb-6">
-        <Button variant="utility" size="md" onClick={onBack}>
-          <ArrowLeft size={20} className="mr-2" /> Back
+        <Button variant="utility" size="lg" onClick={onBack}>
+          <ArrowLeft size={28} className="mr-2" /> Back
         </Button>
       </div>
       <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-soft">

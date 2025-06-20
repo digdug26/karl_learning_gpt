@@ -161,11 +161,11 @@ export default function Menu({ onSelect, onBack }) {
         >
           <Button
             variant="utility"
-            size="md"
+            size="lg"
             onClick={onBack}
             className="hover:shadow-medium"
           >
-            <ArrowLeft size={20} className="mr-2" />
+            <ArrowLeft size={28} className="mr-2" />
             Back to Home
           </Button>
         </motion.div>
