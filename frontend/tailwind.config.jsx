@@ -168,6 +168,7 @@ module.exports = {
         'glow-green': '0 0 20px rgba(34, 197, 94, 0.15)',
         'glow-purple': '0 0 20px rgba(168, 85, 247, 0.15)',
         'glow-yellow': '0 0 20px rgba(245, 158, 11, 0.15)',
+        'glow-orange': '0 0 20px rgba(249, 115, 22, 0.15)',
       },
       
       animation: {
@@ -188,7 +189,11 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         }
       },
-      
+
+      gridTemplateColumns: {
+        '13': 'repeat(13, minmax(0, 1fr))',
+      },
+
       spacing: {
         // Professional spacing scale
         '18': '4.5rem',   // 72px
