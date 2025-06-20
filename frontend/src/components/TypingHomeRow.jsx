@@ -137,7 +137,7 @@ export default function TypingHomeRow({ onFinish }) {
       </div>
 
       {/* Text to type */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-4 border-2 border-white/50 shadow-soft">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-8 mb-4 border-2 border-white/50 shadow-soft">
         <label className="block text-sm font-semibold text-gray-700 mb-3">
           Type this text:
         </label>
@@ -149,7 +149,7 @@ export default function TypingHomeRow({ onFinish }) {
       </div>
 
       {/* Mastery progress bar */}
-      <div className="mt-6">
+      <div className="mt-6 py-4">
         <label className="block text-sm font-semibold text-gray-700 mb-2">Mastery Progress:</label>
         <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
@@ -165,7 +165,7 @@ export default function TypingHomeRow({ onFinish }) {
       </div>
 
       {/* Input field */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/50 shadow-soft">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-8 border-2 border-white/50 shadow-soft">
         <label className="block text-sm font-semibold text-gray-700 mb-3">
           Your typing:
         </label>
@@ -185,7 +185,7 @@ export default function TypingHomeRow({ onFinish }) {
         />
         
         {/* Progress indicator */}
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between py-4">
           <div className="flex items-center gap-2 text-sm">
             <span className="text-gray-600">Progress:</span>
             <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
