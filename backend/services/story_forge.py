@@ -2,8 +2,14 @@ import json
 import random
 import uuid
 from datetime import datetime
+import os
 from pathlib import Path
 import shutil
+from io import BytesIO
+
+from urllib.request import urlopen
+from PIL import Image
+from openai import OpenAI
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 STORIES_FILE = DATA_DIR / "stories.json"
@@ -12,6 +18,10 @@ BADGES_DIR = DATA_DIR / "badges" / "story_illustrations"
 
 IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 BADGES_DIR.mkdir(parents=True, exist_ok=True)
+
+# Initialize OpenAI client if key is available
+api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=api_key) if api_key else None
 
 # Simple prompt list for demonstration
 PROMPTS = [
@@ -55,10 +65,21 @@ def save_story(user_id: str, prompt: str, story_text: str) -> dict:
 
 
 def generate_image(prompt: str, story_text: str, story_id: str) -> str:
-    """Stubbed image generation that copies a placeholder svg."""
-    placeholder = Path(__file__).resolve().parents[2] / "frontend" / "src" / "assets" / "react.svg"
-    dest = IMAGES_DIR / f"{story_id}.svg"
-    shutil.copy(placeholder, dest)
+    """Create an illustration using OpenAI. Falls back to a blank image."""
+    dest = IMAGES_DIR / f"{story_id}.jpeg"
+    try:
+        full_prompt = f"Illustration for this story: {story_text}"
+        if client:
+            resp = client.images.generate(model="dall-e-3", prompt=full_prompt, n=1, size="1024x1024")
+            url = resp.data[0].url
+            img_bytes = urlopen(url).read()
+            img = Image.open(BytesIO(img_bytes))
+            img.convert("RGB").save(dest, format="JPEG")
+        else:
+            raise RuntimeError("openai api_key missing")
+    except Exception:
+        # Offline or API failure - create simple placeholder
+        Image.new("RGB", (512, 512), color="white").save(dest, format="JPEG")
     return str(dest)
 
 
