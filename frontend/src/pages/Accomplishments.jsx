@@ -4,14 +4,17 @@ import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { loadProgress, alphabet } from '../utils/typingProgress';
 import { loadStoryImages } from '../utils/storyImages';
+import { loadStoryPDFs } from '../utils/storyPDFs';
 
 export default function Accomplishments({ onBack }) {
   const [progress, setProgress] = useState(() => loadProgress());
   const [storyImages, setStoryImages] = useState(() => loadStoryImages());
+  const [storyPDFs, setStoryPDFs] = useState(() => loadStoryPDFs());
 
   useEffect(() => {
     setProgress(loadProgress());
     setStoryImages(loadStoryImages());
+    setStoryPDFs(loadStoryPDFs());
   }, []);
 
   const progressPercentage = (progress.lettersCount / alphabet.length) * 100;
@@ -263,6 +266,29 @@ export default function Accomplishments({ onBack }) {
               <img key={idx} src={url} alt="Story" className="w-32 h-32 object-cover rounded" />
             ))}
           </div>
+        </motion.div>
+      )}
+
+      {storyPDFs.length > 0 && (
+        <motion.div
+          className="bg-white rounded-lg shadow-sm border border-slate-200 p-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <div className="flex items-center space-x-3 mb-4">
+            <PenTool className="h-6 w-6 text-purple-600" />
+            <h3 className="text-lg font-semibold text-slate-900">Created Stories</h3>
+          </div>
+          <ul className="list-disc pl-6 space-y-2">
+            {storyPDFs.map((url, idx) => (
+              <li key={idx}>
+                <a href={url} download={`story-${idx + 1}.pdf`} className="text-blue-600 underline">
+                  Download Story {idx + 1}
+                </a>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       )}
 
