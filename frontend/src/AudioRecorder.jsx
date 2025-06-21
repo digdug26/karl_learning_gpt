@@ -25,8 +25,8 @@ export default function AudioRecorder({ threadId, passageText, afterSubmit, clas
         form.append('thread_id', threadId);
         form.append('passage', passageText);
         form.append('audio', file);
-        await axios.post('/api/submit_audio', form);
-        afterSubmit();
+        const { data } = await axios.post('/api/submit_audio', form);
+        afterSubmit(data);
         setRecorder(null);
         setIsRecording(false);
       };

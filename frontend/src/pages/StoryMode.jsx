@@ -20,6 +20,9 @@ import ActivityBox from '../ActivityBox';
 import SessionTimer from '../components/SessionTimer';
 import TypingHomeRow from '../components/TypingHomeRow';
 import ComicPad from '../components/ComicPad';
+import ChooseAdventure from './ChooseAdventure';
+import StoryForge from './StoryForge';
+import FunFacts from './FunFacts';
 
 const profile = { attention: { session_max_minutes: 30 } };
 
@@ -30,8 +33,19 @@ export default function StoryMode({ onBack }) {
   const [loading, setLoading] = useState(false);
   const [showComic, setShowComic] = useState(false);
   const [sessionStarted, setSessionStarted] = useState(false);
-  
+  const [mode, setMode] = useState(null);
+
   const readAloudText = activity?.read_aloud || "";
+
+  if (mode === 'choose') {
+    return <ChooseAdventure onBack={() => setMode(null)} />;
+  }
+  if (mode === 'create') {
+    return <StoryForge onBack={() => setMode(null)} />;
+  }
+  if (mode === 'facts') {
+    return <FunFacts onBack={() => setMode(null)} />;
+  }
 
   useEffect(() => {
     const openComic = () => setShowComic(true);
@@ -184,27 +198,32 @@ export default function StoryMode({ onBack }) {
                 </p>
               </div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Button
                   variant="hero"
-                  size="xxl"
-                  onClick={newSession}
-                  loading={loading}
-                  className="shadow-2xl hover:shadow-glow-blue border-4 border-ocean-300"
+                  size="lg"
+                  onClick={() => setMode('choose')}
+                  className="w-full"
                 >
-                  <Rocket size={40} className="mr-4" />
-                  <span className="text-white font-bold">
-                    {loading ? "Starting Adventure..." : "🚀 Start Karl's Adventure"}
-                  </span>
+                  Choose Your Own Adventure
                 </Button>
-              </motion.div>
-
-              <p className="mt-6 text-gray-600 font-medium">
-                Click to begin your personalized learning session!
-              </p>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => setMode('create')}
+                  className="w-full"
+                >
+                  Story Creation
+                </Button>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => setMode('facts')}
+                  className="w-full"
+                >
+                  Fun Facts
+                </Button>
+              </div>
             </motion.div>
           ) : (
             /* Active Session Interface */
