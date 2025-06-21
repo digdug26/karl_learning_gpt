@@ -21,7 +21,7 @@ import SessionTimer from '../components/SessionTimer';
 import TypingHomeRow from '../components/TypingHomeRow';
 import ComicPad from '../components/ComicPad';
 import ChooseAdventure from './ChooseAdventure';
-import StoryForge from './StoryForge';
+import StoryCreation from './StoryCreation';
 import FunFacts from './FunFacts';
 
 const profile = { attention: { session_max_minutes: 30 } };
@@ -41,7 +41,7 @@ export default function StoryMode({ onBack }) {
     return <ChooseAdventure onBack={() => setMode(null)} />;
   }
   if (mode === 'create') {
-    return <StoryForge onBack={() => setMode(null)} />;
+    return <StoryCreation onBack={() => setMode(null)} />;
   }
   if (mode === 'facts') {
     return <FunFacts onBack={() => setMode(null)} />;
