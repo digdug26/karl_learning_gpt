@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import TypingHomeRow from '../components/TypingHomeRow';
 import StoryForge from './StoryForge';
@@ -8,6 +8,12 @@ import { motion } from 'framer-motion';
 
 export default function TypingChallenge({ onBack }) {
   const [activity, setActivity] = useState(null);
+
+  useEffect(() => {
+    const handler = () => setActivity(null);
+    window.addEventListener('reset-typing-challenge', handler);
+    return () => window.removeEventListener('reset-typing-challenge', handler);
+  }, []);
 
   const activities = [
     {
@@ -54,7 +60,7 @@ export default function TypingChallenge({ onBack }) {
   if (activity === 'basics') {
     return (
       <div className="space-y-6">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 pl-2 mt-4">
           <Keyboard className="h-8 w-8 text-blue-600" />
           <div>
             <h1 className="text-2xl font-bold text-slate-900">Typing Basics</h1>

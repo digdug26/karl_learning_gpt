@@ -159,10 +159,26 @@ export default function TypingHomeRow({ onFinish }) {
             transition={{ duration: 0.5 }}
           />
         </div>
-        <div className="text-right text-xs font-mono text-gray-600 mt-1">
-          {progress.lettersCount}/{alphabet.length} letters
-        </div>
+      <div className="text-right text-xs font-mono text-gray-600 mt-1">
+        {progress.lettersCount}/{alphabet.length} letters
       </div>
+    </div>
+
+    {/* Attempt progress bar */}
+    <div className="mt-4">
+      <label className="block text-sm font-semibold text-gray-700 mb-2">Attempt Progress:</label>
+      <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-gradient-to-r from-ocean-400 to-ocean-600"
+          initial={{ width: 0 }}
+          animate={{ width: `${(progress.streak / 5) * 100}%` }}
+          transition={{ duration: 0.5 }}
+        />
+      </div>
+      <div className="text-right text-xs font-mono text-gray-600 mt-1">
+        {progress.streak}/5 attempts
+      </div>
+    </div>
 
       {/* Input field */}
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-8 border-2 border-white/50 shadow-soft">
