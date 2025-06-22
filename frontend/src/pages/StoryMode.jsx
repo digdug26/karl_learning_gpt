@@ -203,25 +203,25 @@ export default function StoryMode({ onBack }) {
                   variant="hero"
                   size="lg"
                   onClick={() => setMode('choose')}
-                  className="w-full"
+                  className="w-[500px] h-[100px] p-[50px]"
                 >
-                  Choose Your Own Adventure
+                  🏔️ Choose Your Own Adventure 🗺️
                 </Button>
                 <Button
                   variant="hero"
                   size="lg"
                   onClick={() => setMode('create')}
-                  className="w-full"
+                  className="w-[500px] h-[100px] p-[50px]"
                 >
-                  Story Creation
+                  📖 Story Creation 📝
                 </Button>
                 <Button
                   variant="hero"
                   size="lg"
                   onClick={() => setMode('facts')}
-                  className="w-full"
+                  className="w-[500px] h-[100px] p-[50px]"
                 >
-                  Fun Facts
+                  🧪🗿 Fun Facts 🌍🚀
                 </Button>
               </div>
             </motion.div>
