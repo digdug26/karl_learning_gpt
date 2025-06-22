@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { BookOpen, Keyboard, Image as ImageIcon, ArrowLeft, Award, ChevronRight } from "lucide-react";
+import { Swords, Keyboard, Image as ImageIcon, ArrowLeft, Award, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Menu({ onSelect, onBack }) {
@@ -8,7 +8,7 @@ export default function Menu({ onSelect, onBack }) {
       id: "story",
       title: "Story Mode",
       subtitle: "Read interactive adventures and improve comprehension skills",
-      icon: BookOpen,
+      icon: Swords,
       iconColor: "text-green-600",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
@@ -84,7 +84,7 @@ export default function Menu({ onSelect, onBack }) {
             >
               <div className="flex items-start space-x-4">
                 {/* Icon */}
-                <div className={`p-3 rounded-lg bg-white border ${item.borderColor} group-hover:scale-105 transition-transform duration-200`}>
+                <div className={`p-3 rounded-lg bg-white group-hover:scale-105 transition-transform duration-200`}>
                   <item.icon className={`h-6 w-6 ${item.iconColor}`} />
                 </div>
                 
@@ -119,7 +119,7 @@ export default function Menu({ onSelect, onBack }) {
         }}
       >
         <h3 className="text-lg font-semibold text-slate-900 mb-4">Your Progress Overview</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="text-center p-4 bg-slate-50 rounded-lg">
             <div className="text-2xl font-bold text-green-600 mb-1">12</div>
             <div className="text-sm text-slate-600">Stories Read</div>
