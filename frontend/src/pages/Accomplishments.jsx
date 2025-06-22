@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Award, Trophy, Target, TrendingUp, Calendar, PenTool } from 'lucide-react';
+import { ArrowLeft, Award, Trophy, Target, TrendingUp, Calendar, PenTool } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { loadProgress, alphabet } from '../utils/typingProgress';
@@ -22,6 +22,11 @@ export default function Accomplishments({ onBack }) {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center">
+        <Button variant="ghost" onClick={onBack}>
+          <ArrowLeft className="h-5 w-5 mr-2" />Back
+        </Button>
+      </div>
       {/* Header */}
       <motion.div
         className="text-center"
@@ -157,7 +162,7 @@ export default function Accomplishments({ onBack }) {
         </div>
       </motion.div>
 
-      {/* Achievements & Badges */}
+      {/* Stickers */}
       <motion.div
         className="bg-white rounded-lg shadow-sm border border-slate-200 p-6"
         initial={{ opacity: 0, y: 20 }}
@@ -166,85 +171,68 @@ export default function Accomplishments({ onBack }) {
       >
         <div className="flex items-center space-x-3 mb-6">
           <Award className="h-6 w-6 text-yellow-600" />
-          <h3 className="text-lg font-semibold text-slate-900">Earned Achievements</h3>
+          <h3 className="text-lg font-semibold text-slate-900">Stickers</h3>
         </div>
 
-        {totalAchievements === 0 ? (
+        {progress.achievements.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-slate-500 mb-2">No stickers yet</p>
+            <p className="text-sm text-slate-400">Complete activities to earn stickers!</p>
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-3 p-4 bg-slate-50 rounded-lg border border-slate-200">
+            {progress.achievements.map((achievement, idx) => (
+              <motion.div
+                key={idx}
+                className="text-3xl p-2 bg-white rounded-lg border border-slate-200 shadow-sm"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: idx * 0.1,
+                  type: "spring",
+                  stiffness: 300
+                }}
+                whileHover={{ scale: 1.1 }}
+              >
+                {achievement.icon}
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </motion.div>
+
+      {/* Badges */}
+      <motion.div
+        className="bg-white rounded-lg shadow-sm border border-slate-200 p-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+      >
+        <div className="flex items-center space-x-3 mb-6">
+          <Trophy className="h-6 w-6 text-yellow-600" />
+          <h3 className="text-lg font-semibold text-slate-900">Badges</h3>
+        </div>
+
+        {progress.badge ? (
+          <div className="flex flex-wrap gap-3 p-4 bg-slate-50 rounded-lg border border-slate-200">
+            <motion.div
+              className="text-3xl p-2 bg-yellow-50 rounded-lg border border-yellow-200 shadow-sm"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ duration: 0.5, type: 'spring', stiffness: 300 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              {progress.badge.icon}
+            </motion.div>
+          </div>
+        ) : (
           <div className="text-center py-8">
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trophy className="h-8 w-8 text-slate-400" />
             </div>
-            <p className="text-slate-500 mb-2">No achievements yet</p>
+            <p className="text-slate-500 mb-2">No badges yet</p>
             <p className="text-sm text-slate-400">Keep practicing to earn your first badge!</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {/* Achievement Icons Display */}
-            <div className="flex flex-wrap gap-3 p-4 bg-slate-50 rounded-lg border border-slate-200">
-              {progress.achievements.map((achievement, idx) => (
-                <motion.div
-                  key={idx}
-                  className="text-3xl p-2 bg-white rounded-lg border border-slate-200 shadow-sm"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 0.5, 
-                    delay: idx * 0.1,
-                    type: "spring",
-                    stiffness: 300
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {achievement.icon}
-                </motion.div>
-              ))}
-              {progress.badge && (
-                <motion.div
-                  className="text-3xl p-2 bg-yellow-50 rounded-lg border border-yellow-200 shadow-sm"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 0.5, 
-                    delay: progress.achievements.length * 0.1,
-                    type: "spring",
-                    stiffness: 300
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {progress.badge.icon}
-                </motion.div>
-              )}
-            </div>
-
-            {/* Achievement Details */}
-            <div className="space-y-2">
-              {progress.achievements.map((achievement, idx) => (
-                <div key={idx} className="flex items-center space-x-3 p-2">
-                  <span className="text-lg">{achievement.icon}</span>
-                  <div>
-                    <p className="text-sm font-medium text-slate-700">
-                      {achievement.name || `Achievement ${idx + 1}`}
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      {achievement.description || 'Great work!'}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {progress.badge && (
-                <div className="flex items-center space-x-3 p-2 bg-yellow-50 rounded border border-yellow-200">
-                  <span className="text-lg">{progress.badge.icon}</span>
-                  <div>
-                    <p className="text-sm font-medium text-yellow-800">
-                      {progress.badge.name || 'Special Badge'}
-                    </p>
-                    <p className="text-xs text-yellow-600">
-                      {progress.badge.description || 'Outstanding achievement!'}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         )}
       </motion.div>
