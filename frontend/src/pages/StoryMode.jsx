@@ -37,16 +37,6 @@ export default function StoryMode({ onBack }) {
 
   const readAloudText = activity?.read_aloud || "";
 
-  if (mode === 'choose') {
-    return <ChooseAdventure onBack={() => setMode(null)} />;
-  }
-  if (mode === 'create') {
-    return <StoryCreation onBack={() => setMode(null)} />;
-  }
-  if (mode === 'facts') {
-    return <FunFacts onBack={() => setMode(null)} />;
-  }
-
   useEffect(() => {
     const openComic = () => setShowComic(true);
     window.addEventListener('comic-break', openComic);
@@ -108,6 +98,16 @@ export default function StoryMode({ onBack }) {
       setLoading(false);
     }
   };
+
+  if (mode === 'choose') {
+    return <ChooseAdventure onBack={() => setMode(null)} />;
+  }
+  if (mode === 'create') {
+    return <StoryCreation onBack={() => setMode(null)} />;
+  }
+  if (mode === 'facts') {
+    return <FunFacts onBack={() => setMode(null)} />;
+  }
 
   return (
     <div className="min-h-screen bg-sky-200 relative">
