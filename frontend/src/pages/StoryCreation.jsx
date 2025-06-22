@@ -12,11 +12,16 @@ export default function StoryCreation({ onBack }) {
   const [showCanvas, setShowCanvas] = useState(false);
   const canvasRef = useRef(null);
   const [drawing, setDrawing] = useState(false);
+  const history = useRef([]);
+  const [color, setColor] = useState('#000000');
+  const [lineWidth, setLineWidth] = useState(2);
 
   const startDraw = (e) => {
     if (!showCanvas) return;
     const rect = canvasRef.current.getBoundingClientRect();
     const ctx = canvasRef.current.getContext('2d');
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
     ctx.beginPath();
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
     setDrawing(true);
@@ -33,11 +38,28 @@ export default function StoryCreation({ onBack }) {
   const endDraw = () => {
     if (!showCanvas) return;
     setDrawing(false);
+    history.current.push(canvasRef.current.toDataURL());
   };
 
   const clearCanvas = () => {
     const ctx = canvasRef.current.getContext('2d');
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    history.current = [];
+  };
+
+  const undo = () => {
+    if (history.current.length <= 1) {
+      clearCanvas();
+      return;
+    }
+    history.current.pop();
+    const img = new Image();
+    img.src = history.current[history.current.length - 1];
+    img.onload = () => {
+      const ctx = canvasRef.current.getContext('2d');
+      ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      ctx.drawImage(img, 0, 0);
+    };
   };
 
   const captureDrawing = () => {
@@ -136,8 +158,23 @@ export default function StoryCreation({ onBack }) {
               onMouseUp={endDraw}
               onMouseLeave={endDraw}
             />
-            <div className="mt-2">
+            <div className="mt-2 flex items-center gap-2 flex-wrap">
               <Button size="sm" variant="ghost" onClick={clearCanvas}>Clear</Button>
+              <Button size="sm" variant="ghost" onClick={undo}>Undo</Button>
+              <label className="text-sm flex items-center gap-1">
+                Color
+                <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+              </label>
+              <label className="text-sm flex items-center gap-1">
+                Width
+                <input
+                  type="range"
+                  min="1"
+                  max="20"
+                  value={lineWidth}
+                  onChange={(e) => setLineWidth(Number(e.target.value))}
+                />
+              </label>
             </div>
           </div>
         )}
