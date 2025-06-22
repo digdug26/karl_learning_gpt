@@ -65,10 +65,15 @@ export default function App() {
                   {getNavItems().map((item) => (
                     <button
                       key={item.id}
-                      onClick={() => setStage(item.id)}
+                      onClick={() => {
+                        if (item.id === 'game' && stage === 'game') {
+                          window.dispatchEvent(new Event('reset-typing-challenge'));
+                        }
+                        setStage(item.id);
+                      }}
                       className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        item.active 
-                          ? 'bg-blue-100 text-blue-700' 
+                        item.active
+                          ? 'bg-blue-100 text-blue-700'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                     >
