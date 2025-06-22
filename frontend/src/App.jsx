@@ -54,7 +54,7 @@ export default function App() {
       {/* Professional Navigation Header */}
       {showNavigation && (
         <nav className="bg-white shadow-sm border-b border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
                 <BookOpen className="h-8 w-8 text-blue-600 mr-3" />
@@ -88,7 +88,7 @@ export default function App() {
       )}
 
       {/* Main Content */}
-      <main className={showNavigation ? "max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8" : ""}>
+      <main className={showNavigation ? "max-w-[1100px] mx-auto py-6 px-4 sm:px-6 lg:px-8" : ""}>
         {stage === "home" && <HomePage onStart={() => setStage("menu")} />}
         {stage === "menu" && <Menu onSelect={(mode) => setStage(mode)} onBack={() => setStage("home")} />}
         {stage === "story" && <StoryMode onBack={() => setStage("menu")} />}
