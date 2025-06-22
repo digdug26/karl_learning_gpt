@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, Form
+from uuid import uuid4
+
+from utils import readaloud, mood
 from pydantic import BaseModel
 
 from typing import Dict
@@ -99,3 +102,40 @@ async def journal_reflection(payload: ReflectionPayload):
     """Attach a reflection answer to an entry."""
     entry = add_reflection(payload.entry_id, payload.reflection)
     return {"entry": entry}
+
+
+# ---------------------------------------------------------------------------
+# Basic session management and scoring endpoints used by the front-end
+# ---------------------------------------------------------------------------
+
+@app.post("/start_session")
+async def start_session():
+    """Return a new session/thread identifier."""
+    return {"thread_id": str(uuid4())}
+
+
+@app.post("/submit_audio")
+async def submit_audio(
+    thread_id: str = Form(...),
+    passage: str = Form(None),
+    audio: UploadFile = File(...),
+):
+    """Score a read-aloud audio clip and return fluency metrics."""
+    metrics = readaloud.score(audio, passage_id="p1")
+    return {"status": "ok", **metrics}
+
+
+@app.post("/submit_mood")
+async def submit_mood(
+    thread_id: str = Form(...),
+    image: UploadFile = File(...),
+):
+    """Assess mood from an uploaded image and return the score."""
+    mood_score = mood.assess_image(image)
+    return {"mood_score": mood_score}
+
+
+@app.get("/next_activity")
+async def next_activity(thread_id: str):
+    """Placeholder next activity endpoint."""
+    return {"activity": "{}"}
