@@ -1,4 +1,6 @@
-export const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+// Represent the alphabet as an array so it can be safely iterated with array
+// methods like `.map()`.
+export const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 export function loadProgress() {
   try {
