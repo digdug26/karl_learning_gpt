@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Rocket, 
-  Mic, 
-  MicOff, 
-  Camera, 
-  SkipForward, 
+import {
+  Rocket,
+  Mic,
+  MicOff,
+  Camera,
+  SkipForward,
   Home,
   Clock,
   Award,
-  Loader2
+  Loader2,
+  Swords,
+  Book,
+  FlaskConical
 } from 'lucide-react';
 
 import { Button } from '../components/ui/button';
@@ -198,30 +201,36 @@ export default function StoryMode({ onBack }) {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 place-items-center">
                 <Button
                   variant="hero"
                   size="lg"
                   onClick={() => setMode('choose')}
-                  className="w-[500px] h-[100px] p-[50px]"
+                  className="w-[500px] h-[100px] p-[50px] text-5xl flex items-center justify-center"
                 >
-                  🏔️ Choose Your Own Adventure 🗺️
+                  <Swords className="w-10 h-10 mr-4" />
+                  Choose Your Own Adventure
+                  <Swords className="w-10 h-10 ml-4" />
                 </Button>
                 <Button
                   variant="hero"
                   size="lg"
                   onClick={() => setMode('create')}
-                  className="w-[500px] h-[100px] p-[50px]"
+                  className="w-[500px] h-[100px] p-[50px] text-5xl flex items-center justify-center"
                 >
-                  📖 Story Creation 📝
+                  <Book className="w-10 h-10 mr-4" />
+                  Story Creation
+                  <Book className="w-10 h-10 ml-4" />
                 </Button>
                 <Button
                   variant="hero"
                   size="lg"
                   onClick={() => setMode('facts')}
-                  className="w-[500px] h-[100px] p-[50px]"
+                  className="w-[500px] h-[100px] p-[50px] text-5xl flex items-center justify-center"
                 >
-                  🧪🗿 Fun Facts 🌍🚀
+                  <FlaskConical className="w-10 h-10 mr-4" />
+                  Fun Facts
+                  <FlaskConical className="w-10 h-10 ml-4" />
                 </Button>
               </div>
             </motion.div>
