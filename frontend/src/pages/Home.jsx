@@ -1,6 +1,16 @@
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
-import { Rocket, Stars, Zap, BookOpen } from "lucide-react";
+import {
+  Rocket,
+  Stars,
+  Zap,
+  BookOpen,
+  FlaskConical,
+  Snail,
+  PawPrint,
+  Atom,
+  Cat,
+} from "lucide-react";
 
 export default function Home({ onStart }) {
   return (
@@ -67,8 +77,12 @@ export default function Home({ onStart }) {
             ease: "easeOut"
           }}
         >
-          <div className="text-6xl mb-6">
-            📖 ⌨️ ⭐ 🐧 👽 ✏️ 🐅
+          <div className="mb-6 flex justify-center space-x-4 text-blue-600">
+            <FlaskConical className="w-12 h-12" />
+            <Snail className="w-12 h-12" />
+            <PawPrint className="w-12 h-12" />
+            <Atom className="w-12 h-12" />
+            <Cat className="w-12 h-12" />
           </div>
           <h1 className="text-6xl font-bold text-slate-900 mb-2">
             Karl's Adventure
@@ -106,7 +120,7 @@ export default function Home({ onStart }) {
       >
         <button
           onClick={onStart}
-          className="group bg-blue-600 hover:bg-blue-700 text-white px-12 py-6 rounded-lg text-lg font-medium shadow-sm border border-blue-600 transition-all duration-200 flex items-center space-x-3"
+          className="group bg-blue-600 hover:bg-blue-700 text-white px-12 py-6 rounded-lg text-lg font-medium shadow-sm border border-blue-600 transition-all duration-200 flex items-center space-x-3 w-[400px]"
         >
           <Rocket className="h-6 w-6" />
           <span>Start Learning Adventure</span>
