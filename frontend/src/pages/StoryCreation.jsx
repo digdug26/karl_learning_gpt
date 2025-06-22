@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import jsPDF from 'jspdf';
 import { Button } from '../components/ui/button';
 import { addStoryPDF } from '../utils/storyPDFs';
+import { createPdf, downloadPdf } from '../utils/simplePdf';
 
 export default function StoryCreation({ onBack }) {
   const [title, setTitle] = useState('');
@@ -62,24 +62,9 @@ export default function StoryCreation({ onBack }) {
   };
 
   const generatePDF = (allChapters) => {
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text(title || 'My Story', 10, 20);
-    allChapters.forEach((ch, idx) => {
-      if (idx > 0 || title) doc.addPage();
-      doc.setFontSize(14);
-      if (ch.name) doc.text(ch.name, 10, 30);
-      doc.setFontSize(12);
-      doc.text(ch.text || '', 10, 40, { maxWidth: 180 });
-      if (ch.illustration) {
-        try {
-          doc.addImage(ch.illustration, 'PNG', 10, 80, 100, 100);
-        } catch {}
-      }
-    });
-    const dataUrl = doc.output('datauristring');
+    const dataUrl = createPdf(title || 'My Story', allChapters);
     addStoryPDF(dataUrl);
-    doc.save('story.pdf');
+    downloadPdf(dataUrl, 'story.pdf');
   };
 
   const handleDoneStory = () => {
