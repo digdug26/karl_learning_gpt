@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { jsPDF } from 'jspdf';
+import jsPDF from 'jspdf';
 import { Button } from '../components/ui/button';
 import { addStoryPDF } from '../utils/storyPDFs';
 
