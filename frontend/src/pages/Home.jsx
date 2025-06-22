@@ -1,6 +1,6 @@
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
-import { Rocket, Stars, Zap, BookOpen, Keyboard } from "lucide-react";
+import { Rocket, Stars, Zap, BookOpen } from "lucide-react";
 
 export default function Home({ onStart }) {
   return (
@@ -67,7 +67,9 @@ export default function Home({ onStart }) {
             ease: "easeOut"
           }}
         >
-          <BookOpen className="h-16 w-16 text-blue-600 mx-auto mb-6" />
+          <div className="text-6xl mb-6">
+            📖 ⌨️ ⭐ 🐧 👽 ✏️ 🐅
+          </div>
           <h1 className="text-6xl font-bold text-slate-900 mb-2">
             Karl's Adventure
           </h1>
@@ -104,20 +106,10 @@ export default function Home({ onStart }) {
       >
         <button
           onClick={onStart}
-          className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-medium shadow-sm border border-blue-600 transition-all duration-200 flex items-center space-x-3"
+          className="group bg-blue-600 hover:bg-blue-700 text-white px-12 py-6 rounded-lg text-lg font-medium shadow-sm border border-blue-600 transition-all duration-200 flex items-center space-x-3"
         >
           <Rocket className="h-6 w-6" />
           <span>Start Learning Adventure</span>
-          <motion.div
-            animate={{ x: [0, 4, 0] }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            →
-          </motion.div>
         </button>
       </motion.div>
 
@@ -134,32 +126,6 @@ export default function Home({ onStart }) {
         Ready to begin? Click above to explore your learning options.
       </motion.p>
 
-      {/* Feature highlights */}
-      <motion.div
-        className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          duration: 0.8,
-          delay: 1.2
-        }}
-      >
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 text-center">
-          <BookOpen className="h-8 w-8 text-green-600 mx-auto mb-3" />
-          <h3 className="font-medium text-slate-900 mb-2">Interactive Stories</h3>
-          <p className="text-sm text-slate-600">Engaging reading adventures that make learning fun</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 text-center">
-          <Keyboard className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-          <h3 className="font-medium text-slate-900 mb-2">Typing Practice</h3>
-          <p className="text-sm text-slate-600">Build essential keyboard skills through games</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 text-center">
-          <Stars className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-          <h3 className="font-medium text-slate-900 mb-2">Track Progress</h3>
-          <p className="text-sm text-slate-600">See your achievements and celebrate success</p>
-        </div>
-      </motion.div>
     </div>
   );
 }
