@@ -2,6 +2,17 @@ from fastapi import FastAPI, UploadFile, File, Form
 from uuid import uuid4
 
 from utils import readaloud, mood
+from pathlib import Path
+import random
+
+# Load fun facts data from the backend/data directory
+DATA_DIR = Path(__file__).resolve().parent / "data"
+
+
+def _random_line(path: Path) -> str:
+    with open(path) as f:
+        lines = [ln.strip() for ln in f if ln.strip()]
+    return random.choice(lines) if lines else ""
 from pydantic import BaseModel
 
 from typing import Dict
@@ -35,6 +46,11 @@ class StoryPayload(BaseModel):
     user_id: str
     prompt: str
     story_text: str
+
+
+class FactsSummaryPayload(BaseModel):
+    topic: str
+    count: int
 
 
 class BadgePayload(BaseModel):
@@ -102,6 +118,33 @@ async def journal_reflection(payload: ReflectionPayload):
     """Attach a reflection answer to an entry."""
     entry = add_reflection(payload.entry_id, payload.reflection)
     return {"entry": entry}
+
+
+# ---------------------------------------------------------------------------
+# Fun Facts Endpoints
+# ---------------------------------------------------------------------------
+
+@app.get("/fun_facts_options")
+async def fun_facts_options():
+    """Return one random topic from each list."""
+    options = {
+        "history": _random_line(DATA_DIR / "HistoricalPeople.txt"),
+        "science": _random_line(DATA_DIR / "HistoricalScience.txt"),
+        "space": _random_line(DATA_DIR / "SpaceTopics.txt"),
+        "animals": _random_line(DATA_DIR / "AnimalTopics.txt"),
+    }
+    return {"options": options}
+
+
+@app.post("/fun_facts_summary")
+async def fun_facts_summary(payload: FactsSummaryPayload):
+    """Return a simple child-friendly summary for a topic."""
+    summary = (
+        f"You are an inspiring educator teaching a 9 year old all about {payload.topic}. "
+        f"This is the {payload.count} time this topic has been introduced to the student so cater your "
+        f"response and level of detail/depth to this. Provide a detailed summary about this topic that is both educational and interesting."
+    )
+    return {"summary": summary}
 
 
 # ---------------------------------------------------------------------------
