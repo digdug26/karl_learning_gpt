@@ -4,7 +4,14 @@ import { Mic, MicOff } from 'lucide-react';
 import { Button } from './components/ui/button';
 import axios from 'axios';
 
-export default function AudioRecorder({ threadId, passageText, afterSubmit, className }) {
+export default function AudioRecorder({
+  threadId,
+  passageText,
+  afterSubmit,
+  className,
+  startLabel = 'Start Reading',
+  stopLabel = 'Stop Recording'
+}) {
   const [recorder, setRecorder] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
 
@@ -57,7 +64,7 @@ export default function AudioRecorder({ threadId, passageText, afterSubmit, clas
             className="min-w-[140px] shadow-glow-orange"
           >
             <Mic size={24} className="mr-2" />
-            Start Reading
+            {startLabel}
           </Button>
         </motion.div>
       ) : (
@@ -74,7 +81,7 @@ export default function AudioRecorder({ threadId, passageText, afterSubmit, clas
             className="min-w-[140px] bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700"
           >
             <MicOff size={24} className="mr-2" />
-            Stop Recording
+            {stopLabel}
           </Button>
         </motion.div>
       )}
