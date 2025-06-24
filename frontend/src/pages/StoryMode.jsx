@@ -171,8 +171,7 @@ export default function StoryMode({ onBack }) {
               onClick={onBack}
               className="hover:shadow-medium"
             >
-              <Home size={28} className="mr-2" />
-              Exit
+              <Home size={28} className="mr-2" /> Exit
             </Button>
           </motion.div>
         )}
@@ -276,8 +275,7 @@ export default function StoryMode({ onBack }) {
                       <Loader2 size={24} className="animate-spin mr-2" />
                     ) : (
                       <SkipForward size={24} className="mr-2" />
-                    )}
-                    Next Task
+                    )} Next Task
                   </Button>
                   <span className="text-sm font-medium text-gray-600">Continue</span>
                 </div>

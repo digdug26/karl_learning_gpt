@@ -77,8 +77,7 @@ export default function App() {
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                     >
-                      <item.icon className="h-4 w-4 mr-2" />
-                      {item.label}
+                      <item.icon className="h-4 w-4 mr-2" /> {item.label}
                     </button>
                   ))}
                 </nav>

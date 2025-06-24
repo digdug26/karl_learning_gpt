@@ -64,7 +64,7 @@ export default function Menu({ onSelect, onBack }) {
       </motion.div>
 
       {/* Activity Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {menuItems.map((item, index) => (
           <motion.div
             key={item.id}
