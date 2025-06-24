@@ -204,7 +204,6 @@ export default function StoryMode({ onBack }) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 place-items-center">
                 <Button
                   variant="hero"
-                  size="lg"
                   onClick={() => setMode('choose')}
                   className="w-[500px] h-[100px] p-[50px] text-5xl flex items-center justify-center"
                 >
@@ -214,7 +213,6 @@ export default function StoryMode({ onBack }) {
                 </Button>
                 <Button
                   variant="hero"
-                  size="lg"
                   onClick={() => setMode('create')}
                   className="w-[500px] h-[100px] p-[50px] text-5xl flex items-center justify-center"
                 >
@@ -224,7 +222,6 @@ export default function StoryMode({ onBack }) {
                 </Button>
                 <Button
                   variant="hero"
-                  size="lg"
                   onClick={() => setMode('facts')}
                   className="w-[500px] h-[100px] p-[50px] text-5xl flex items-center justify-center"
                 >
