@@ -53,7 +53,8 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Professional Navigation Header */}
       {showNavigation && (
-        <nav className="bg-white shadow-sm border-b border-slate-200">
+        {/* Match navigation background with page */}
+        <nav className="bg-slate-50 shadow-sm border-b border-slate-200">
           <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
@@ -74,7 +75,7 @@ export default function App() {
                       className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                         item.active
                           ? 'bg-blue-100 text-blue-700'
-                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                       }`}
                     >
                       <item.icon className="h-4 w-4 mr-2" /> {item.label}
