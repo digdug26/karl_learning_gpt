@@ -24,7 +24,7 @@ export default function Accomplishments({ onBack }) {
     <div className="space-y-6">
       <div className="flex items-center">
         <Button variant="ghost" onClick={onBack}>
-          <ArrowLeft className="h-5 w-5 mr-2" />Back
+          <ArrowLeft className="h-5 w-5 mr-2" /> Back
         </Button>
       </div>
       {/* Header */}

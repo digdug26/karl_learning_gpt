@@ -105,7 +105,7 @@ export default function StoryCreation({ onBack }) {
     <div className="space-y-6">
       <div className="flex items-center space-x-3">
         <Button variant="ghost" onClick={onBack}>
-          <ArrowLeft className="h-5 w-5 mr-2" />Back
+          <ArrowLeft className="h-5 w-5 mr-2" /> Back
         </Button>
         <h1 className="text-2xl font-bold">Story Creation</h1>
       </div>
